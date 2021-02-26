@@ -6,8 +6,7 @@ import {
   incrementByAmount,
   incrementAsync,
   selectCount,
-} from './counter/counterSlice';
-import styles from './Counter.module.css';
+} from '../reducers/counterSlice';
 
 export function Counter() {
   const count = useSelector(selectCount);
@@ -16,32 +15,32 @@ export function Counter() {
 
   return (
     <div>
-      <div className={styles.row}>
+      <div className={null}>
         <button
-          className={styles.button}
+          className={null}
           aria-label="Increment value"
           onClick={() => dispatch(increment())}
         >
           +
         </button>
-        <span className={styles.value}>{count}</span>
+        <span className={null}>{count}</span>
         <button
-          className={styles.button}
+          className={null}
           aria-label="Decrement value"
           onClick={() => dispatch(decrement())}
         >
           -
         </button>
       </div>
-      <div className={styles.row}>
+      <div className={null}>
         <input
-          className={styles.textbox}
+          className={null}
           aria-label="Set increment amount"
           value={incrementAmount}
           onChange={e => setIncrementAmount(e.target.value)}
         />
         <button
-          className={styles.button}
+          className={null}
           onClick={() =>
             dispatch(incrementByAmount(Number(incrementAmount) || 0))
           }
@@ -49,7 +48,7 @@ export function Counter() {
           Add Amount
         </button>
         <button
-          className={styles.asyncButton}
+          className={null}
           onClick={() => dispatch(incrementAsync(Number(incrementAmount) || 0))}
         >
           Add Async
