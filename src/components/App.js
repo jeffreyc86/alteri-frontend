@@ -5,7 +5,9 @@ import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../features/userSlice"
 import Navbar from "./Navbar"
 import SignInContainer from "./Login/SignInContainer"
-import SignUpContainer from './Sign-Up/SignUpContainer';
+import SignUpContainer from './SignUp/SignUpContainer';
+import ProfileContainer from './ProfileContainer/ProfileContainer'
+import RequestContainer from './NewRequest/RequestContainer'
 
 function App() {
 
@@ -27,7 +29,6 @@ function App() {
     }
   },[dispatch])
 
-
   return (
     <div className="App">
       <Navbar />
@@ -37,6 +38,12 @@ function App() {
         </Route>
         <Route exact path="/signup">
           <SignUpContainer />
+        </Route>
+        <Route exact path="/profile">
+          <ProfileContainer />
+        </Route>
+        <Route exact path="/newrequest">
+          <RequestContainer />
         </Route>
       </Switch>
     </div>

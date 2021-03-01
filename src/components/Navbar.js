@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import { useSelector, useDispatch } from "react-redux"
 import {NavLink, useHistory} from 'react-router-dom'
-import { setCurrentUser } from "../features/userSlice"
+import { setCurrentLocation, setCurrentUser } from "../features/userSlice"
 
 
 
@@ -21,6 +21,8 @@ function Navbar () {
         localStorage.removeItem("token")
         const action = setCurrentUser(null);
         dispatch(action)
+        const action2 = setCurrentLocation(null)
+        dispatch(action2)
     }
 
     window.onclick = function(e) {
@@ -42,7 +44,8 @@ function Navbar () {
                     {showMenu ? 
                         <div className="dropdown-content">
                             {currentUser ? 
-                                <>
+                                <>  
+                                    <NavLink to="/newrequest" exact>Create Request</NavLink>
                                     <NavLink to="/profile" exact>Profile</NavLink>
                                     <NavLink to="/" exact onClick={handleLogOut}>Logout</NavLink>
                                 </>

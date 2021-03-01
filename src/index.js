@@ -5,6 +5,7 @@ import App from './components/App';
 import store from './app/store';
 import { Provider } from 'react-redux';
 import {BrowserRouter as Router} from 'react-router-dom'
+import './fonts/Maximize.ttf'
 
 
 ReactDOM.render(
