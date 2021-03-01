@@ -46,11 +46,11 @@ function SignInForm () {
       }
 
     return (
-        <div className="login-form-div">
+        <div className="signin-form-div">
             {errors.map((error, index)=>{
                 return <p key={index} className="errors">{error}</p>
             })}
-            <form className="login-form" onSubmit={handleSubmit}>
+            <form className="signin-form" onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="email">Email</label>
                     <input

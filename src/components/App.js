@@ -25,7 +25,7 @@ function App() {
           dispatch(action)
         });
     }
-  },[])
+  },[dispatch])
 
 
   return (

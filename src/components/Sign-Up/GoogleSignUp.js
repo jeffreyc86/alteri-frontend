@@ -32,7 +32,8 @@ function GoogleSignUp () {
             .then(res=>res.json())
             .then(data => {
                if (data.errors) {
-                   data.errors.forEach(error=>{alert(error + ". Please try again.")})
+                   data.errors.forEach(error=>{alert(error + ". Please sign in instead.")})
+                   history.push("/signin")
                } else {
                    const {user, token} = data
                    const action = setCurrentUser(user);

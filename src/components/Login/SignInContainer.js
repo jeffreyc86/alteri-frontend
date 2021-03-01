@@ -5,7 +5,7 @@ import SignInForm from "./SignInForm"
 function SignInContainer () {
 
     return (
-        <div className="login-container">
+        <div className="signin-container">
 
             <GoogleSignIn />
             <SignInForm />
