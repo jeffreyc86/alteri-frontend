@@ -142,6 +142,11 @@ code {
 
 /* **************PROFILE CONTAINER************** */
 
+.profile-container{
+  width: 80vw;
+  margin: auto;
+}
+
 .profile-banner{
   width: 80vw;
   margin: auto;
@@ -150,7 +155,6 @@ code {
 .banner-box{
   width: inherit;
   margin-top: 10px;
-  position: absolute;
 }
 
 .banner-box img{
@@ -158,12 +162,12 @@ code {
 }
 
 .profile-info{
-  position: absolute;
-  margin-top: 9vw;
+  margin-top: -7vw;
   margin-left: 3vw;
   margin-right: 3vw;
   width: 74vw;
   display: flex;
+  justify-content: space-between;
   height: 14vw;
   z-index: 1;
 }
@@ -183,11 +187,8 @@ code {
 }
 
 .join-date{
-  position: absolute;
-  bottom: 4vw;
-  right: 0;
   margin: 0;
-  padding: 0;
+  padding-top: 8vw;
   color: #7a7a7a;
   font-size: 1vw;
 }
@@ -206,8 +207,13 @@ code {
   vertical-align: super;
 }
 
-
 @media screen and (max-width: 600px) {
+
+  .profile-container{
+    width: 90vw;
+    margin: auto;
+  }
+  
 
   .profile-banner{
     width: 90vw;
@@ -216,8 +222,7 @@ code {
 
   .banner-box{
     width: inherit;
-    margin-top: 10px;
-    position: absolute;
+    margin-top: 2vw;
   }
 
   .banner-box img{
@@ -225,18 +230,18 @@ code {
   }
 
   .profile-info{
-    position: absolute;
-    margin-top: 12vw;
+    margin-top: -7vw;
     margin-left: 3vw;
     margin-right: 3vw;
     width: 84vw;
     display: flex;
+    justify-content: space-between;
     height: 14vw;
     z-index: 1;
   }
 
   .profile-info img{
-    border: white 4px solid;
+    border: white 3px solid;
     width: 13vw;
     height: 13vw;
     border-radius: 50%;
@@ -250,11 +255,8 @@ code {
   }
 
   .join-date{
-    position: absolute;
-    bottom: 2.5vw;
-    right: 0;
     margin: 0;
-    padding: 0;
+    padding-top: 8.5vw;
     color: #7a7a7a;
     font-size: 2vw;
   }

@@ -16,8 +16,10 @@ function ProfileBanner () {
             </div>
             {currentUser ?
              <div className="profile-info">
-                <img src={currentUser.photo_url} alt={currentUser.full_name} />
-                <h1>{currentUser.full_name}</h1>
+                 <div style={{display: "flex"}}>
+                    <img src={currentUser.photo_url} alt={currentUser.full_name} />
+                    <h1>{currentUser.full_name}</h1>
+                </div>
                 <div className="join-date">
                     <img src={process.env.PUBLIC_URL + "/images/calendar.png"} alt="cal" id="calendar-logo"/>
                     <span>Joined {currentUser.join_date}</span>
