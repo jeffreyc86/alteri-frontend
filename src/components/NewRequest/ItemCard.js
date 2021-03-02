@@ -42,17 +42,21 @@ function ItemCard ({addToRequest, item}) {
 
     return (
         <div className="item-card">
-            <tr>
-                <td className="img-column"><img className="item-image" src={process.env.PUBLIC_URL + item.image_url} alt={item.name} /></td>
-                <td className="item-name">{item.name}</td>
-                <td className="pref-column"> 
-                    {prefReq(item) && item.name !== "Bottled Water" ? <input type="text" value={preference} onChange={(e)=>setPreference(e.target.value)} placeholder={item.category === "Food" ? "Allergies / Dietary Preferences" : "Sizing Requirements"}/> : null}
-                </td>
-                <td className="quantity-column">
-                    {item.multiple ? <input type="number" value={quantity} onChange={(e)=>setQuantity(parseInt(e.target.value))} step="1" min="1" max={item.category==="Food" ? "5" : "3" } /> : null}               
-                </td>
-                <td className="btn-column"><button onClick={handleClick} id={item.selected ? "remove-btn" : "add-btn"} className="add-remove-btn">{item.selected ? "Remove" : "Add"}</button></td>
-            </tr>
+            <table>
+                <tbody>
+                    <tr>
+                        <td className="img-column"><img className="item-image" src={process.env.PUBLIC_URL + item.image_url} alt={item.name} /></td>
+                        <td className="item-name">{item.name}</td>
+                        <td className="pref-column"> 
+                            {prefReq(item) && item.name !== "Bottled Water" ? <input type="text" value={preference} onChange={(e)=>setPreference(e.target.value)} placeholder={item.category === "Food" ? "Allergies / Dietary Preferences" : "Sizing Requirements"}/> : null}
+                        </td>
+                        <td className="quantity-column">
+                            {item.multiple ? <input type="number" value={quantity} onChange={(e)=>setQuantity(parseInt(e.target.value))} step="1" min="1" max={item.category==="Food" ? "5" : "3" } /> : null}               
+                        </td>
+                        <td className="btn-column"><button onClick={handleClick} id={item.selected ? "remove-btn" : "add-btn"} className="add-remove-btn">{item.selected ? "Remove" : "Add"}</button></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
     )

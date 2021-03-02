@@ -96,6 +96,53 @@ function RequestForm () {
         })
 
 
+    function submitRequest() {
+        if (selectedItems.length < 1) {
+            alert("Please select the items you need prior to submitting the request.")
+        } else {
+            fetch(`${process.env.REACT_APP_RAILS_URL}requests`, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({recipient_id: currentUser.id})
+            })
+                .then(res=>res.json)
+                .then(requestObj=>{
+
+                    const requestId = requestObj.id
+
+                    selectedItems.forEach(item=>{
+                        let itemObj
+
+                        if (item.preference) {
+                            itemObj = {
+                                item_id: item.id,
+                                request_id: requestId,
+                                preference: item.preference,
+                                quantity: item.quantity
+                            }
+                        } else {
+                            itemObj = {
+                                item_id: item.id,
+                                request_id: requestId,
+                                quantity: item.quantity
+                            }
+                        }
+                        
+                        fetch(`${process.env.REACT_APP_RAILS_URL}request_items`, {
+                            method: 'POST',
+                            headers: {"Content-Type": "application/json"},
+                            body: JSON.stringify(itemObj)
+                        })
+                            .then(res=>res.json())
+                            .then(console.log)
+                    })
+
+                })
+            
+            history.push("/requests")
+        }
+    }
+
 
     return (
         <div className="request-form">
@@ -106,7 +153,7 @@ function RequestForm () {
                 {selectedItems.length === 10 ? <p>You have reached the maximum number of items</p> : null}
                 <div className="request-complete">
                     <h3>Your Current Request Contains <span>{selectedItems.length}</span> {selectedItems.length === 1 ? "Item" : "Items"}</h3>
-                    <button>Complete Request</button>
+                    <button onClick={submitRequest}>Complete Request</button>
                 </div>
             </div>
             <div className="search-filter">

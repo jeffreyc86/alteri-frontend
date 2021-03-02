@@ -39,7 +39,7 @@ function ProfileContainer () {
     return (
         <div className="profile-container">
             <ProfileBanner />
-            test 1234
+            
         </div>
     )
 }
