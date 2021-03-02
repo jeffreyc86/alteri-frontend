@@ -114,6 +114,32 @@ code {
   color: #0492c2
 }
 
+/* **************Footer************** */
+.footer{
+  width: 100;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 1vw;
+}
+
+.footer-logo{
+  width: 3vw;
+}
+
+.footer a{
+  text-decoration: none;
+  color: black;
+  width: 17vw;
+  font-size: 1.2vw;
+  margin-top: .8vw;
+  text-align: center;
+}
+
+.footer a:visited{
+  color: black;
+}
+
+
 /* **************PROFILE CONTAINER************** */
 
 .profile-banner{
@@ -254,8 +280,7 @@ code {
 .request-container{
   width: 80vw;
   background-color: white;
-  margin: auto;
-  margin-top: 10px;
+  margin: 10px auto;
 }
 
 .request-container img{
@@ -291,8 +316,46 @@ code {
   margin-bottom: 20px;
 }
 
+.request-details p{
+  text-align: center;
+  color: red;
+  margin: 0 auto;
+  margin-top: 10px;
+  font-weight: 500;
+}
+
 .request-details:hover{
   border: solid .25px #061430;
+}
+
+.request-complete{
+  width: 60vw;
+  margin: 10px auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.request-complete h3{
+  font-size: 2vw;
+  margin: 0;
+}
+
+.request-complete span{
+  color: #0492c2;
+}
+
+.request-complete button{
+  border: none;
+  border-radius: 3px;
+  padding: 1.6px 5px;
+  color: #f9f9fa;
+  font-weight: 525;
+  font-size: 1.3vw;
+  background-color: #989898;
+}
+
+.request-complete button:hover{
+  background-color: #0492c2;
 }
 
 .search-filter{
@@ -389,7 +452,7 @@ code {
   background-color: #0492c2;
 }
 
-#remove-btn:hover{
+#remove-btn{
   background-color: red;
 }
 
@@ -398,8 +461,7 @@ code {
   .request-container{
     width: 90vw;
     background-color: white;
-    margin: auto;
-    margin-top: 10px;
+    margin: 1.5vw auto;
   }
 
   .request-container img{
@@ -424,13 +486,64 @@ code {
     margin-top: 5px;
     font-size: 1.5vw;
     color: #515151;
+  }
+
+  .request-details{
+    width: 70vw;
+    border: solid .25px #dedede;
+    border-radius: 3px;
+    margin: auto;
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+  }
   
+  .request-details p{
+    text-align: center;
+    color: red;
+    margin: 0 auto;
+    margin-top: 1vw;
+    font-weight: 500;
+  }
+  
+  .request-details:hover{
+    border: solid .25px #061430;
+  }
+  
+  .request-complete{
+    width: 60vw;
+    margin: 1vw auto;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .request-complete h3{
+    font-size: 2vw;
+    margin: 0;
+  }
+  
+  .request-complete span{
+    color: #0492c2;
+  }
+  
+  .request-complete button{
+    border: none;
+    border-radius: 3px;
+    padding: 1.6px 5px;
+    color: #f9f9fa;
+    font-weight: 525;
+    font-size: 1.3vw;
+    background-color: #989898;
+  }
+  
+  .request-complete button:hover{
+    background-color: #0492c2;
   }
 
   .search-filter{
     width: 60vw;
     margin: auto;
     text-align: center;
+    vertical-align: middle;
   }
 
   .search-filter label{
@@ -441,13 +554,12 @@ code {
     margin: 0 5px;
     width: 20vw;
     font-size: 1.5vw;
-    vertical-align: middle;
   }
   
   .search-filter button{
     border: none;
     border-radius: 3px;
-    padding: 2.8px 5px;
+    padding: 2.5px 5px;
     color: #f9f9fa;
     font-weight: 525;
     font-size: 1.5vw;
@@ -527,7 +639,7 @@ code {
     background-color: #0492c2;
   }
 
-  #remove-btn:hover{
+  #remove-btn{
     background-color: red;
   }
 

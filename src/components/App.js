@@ -8,6 +8,7 @@ import SignInContainer from "./Login/SignInContainer"
 import SignUpContainer from './SignUp/SignUpContainer';
 import ProfileContainer from './ProfileContainer/ProfileContainer'
 import RequestContainer from './NewRequest/RequestContainer'
+import Footer from './Footer'
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
           <RequestContainer />
         </Route>
       </Switch>
+      <Footer />
     </div>
   );
 }

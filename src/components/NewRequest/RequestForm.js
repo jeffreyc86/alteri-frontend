@@ -103,7 +103,11 @@ function RequestForm () {
             <p>To add items to your request, simply tap the add button. The default quantity per item on each request is one. However, you may request up to five of some Food items and up to three of some Clothing items. Please include any allergies and dietary restrictions for Food, as well as sizing preferences for clothing. We depend on the kindness and integrity of our users, so <strong>there is a limit of 10 items per request.</strong> </p>
             <p>Once you're complete, submit your request. You will receive a notification as soon as your request been accepted and a chat will be created for you to sort out logistics with your donor. <strong>We ALWAYS suggest meeting in a safe and public location.</strong></p>
             <div className="request-details">
-                test
+                {selectedItems.length === 10 ? <p>You have reached the maximum number of items</p> : null}
+                <div className="request-complete">
+                    <h3>Your Current Request Contains <span>{selectedItems.length}</span> {selectedItems.length === 1 ? "Item" : "Items"}</h3>
+                    <button>Complete Request</button>
+                </div>
             </div>
             <div className="search-filter">
                 <label htmlFor="search">Find an Item by Name</label>
