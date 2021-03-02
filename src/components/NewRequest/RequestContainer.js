@@ -1,17 +1,13 @@
-import React, {useState, useEffect} from 'react'
-import {useSelector} from "react-redux"
-import {useHistory} from 'react-router-dom'
+import React from 'react'
 import RequestForm from "./RequestForm"
 
 
 function RequestContainer () {
 
-    
-    const history = useHistory()
-
 
     return (
         <div className="request-container">
+            <img src={process.env.PUBLIC_URL + "/images/request-banner.jpg"} alt="create a request" />
             <RequestForm />
         </div>
     )

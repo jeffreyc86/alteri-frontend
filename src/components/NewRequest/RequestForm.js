@@ -98,16 +98,27 @@ function RequestForm () {
 
 
     return (
-        <div className="request-form-container">
-            {filteredFoods.length > 0 ? <h3>Food</h3> : null}
-            {filteredFoods}
-            {filteredPandemic.length > 0 ? <h3>Pandemic Necessities</h3> : null}
+        <div className="request-form">
+            <h2>How This Works</h2>
+            <p>To add items to your request, simply tap the add button. The default quantity per item on each request is one. However, you may request up to five of some Food items and up to three of some Clothing items. Please include any allergies and dietary restrictions for Food, as well as sizing preferences for clothing. We depend on the kindness and integrity of our users, so <strong>there is a limit of 10 items per request.</strong> </p>
+            <p>Once you're complete, submit your request. You will receive a notification as soon as your request been accepted and a chat will be created for you to sort out logistics with your donor. <strong>We ALWAYS suggest meeting in a safe and public location.</strong></p>
+            <div className="request-details">
+                test
+            </div>
+            <div className="search-filter">
+                <label htmlFor="search">Find an Item by Name</label>
+                <input type="text" value={filter} onChange={(e)=>setFilter(e.target.value)} />
+                <button className="filter-btn" onClick={()=>setFilter("")}>Clear</button>
+            </div>
+            {filteredPandemic.length > 0 ? <h1>Pandemic Necessities</h1> : null}
             {filteredPandemic}
-            {filteredHygiene.length > 0 ? <h3>Hygiene Essentials</h3> : null}
+            {filteredFoods.length > 0 ? <h1>Food</h1> : null}
+            {filteredFoods}
+            {filteredHygiene.length > 0 ? <h1>Hygiene Essentials</h1> : null}
             {filteredHygiene}
-            {filteredClothes.length > 0 ? <h3>Clothing</h3> : null}
+            {filteredClothes.length > 0 ? <h1>Clothing</h1> : null}
             {filteredClothes}
-            {filteredMisc.length > 0 ? <h3>Miscellaneous</h3> : null}
+            {filteredMisc.length > 0 ? <h1>Miscellaneous</h1> : null}
             {filteredMisc}
         </div>
     )
