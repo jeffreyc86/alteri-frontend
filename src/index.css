@@ -801,4 +801,22 @@ code {
 
 }
 
+/* **************Pending Requests************** */
+.requested-items{
+  display: flex;
+  justify-content: space-around;
+  width: inherit;
+  overflow: auto;
+  width: 50vw;
+  margin: auto;
+}
 
+.request-item-card{
+  width: 9vw;
+  padding: .5vw;
+}
+
+.req-item-img{
+  height: 6vw;
+  width: 6vw;
+}

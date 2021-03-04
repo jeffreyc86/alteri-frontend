@@ -57,8 +57,8 @@ function RequestCard ({request}){
                 </td>
         }
 
-    const itemImages = request.items.map(item=>{
-        return <img key={item.id} className="request-item-img" src={process.env.PUBLIC_URL + item.image_url} alt={item.name} />
+    const itemImages = request.request_items.map(item=>{
+        return <img key={item.item_id} className="request-item-img" src={process.env.PUBLIC_URL + item.item_url} alt={item.item_name} />
     })
 
     return (

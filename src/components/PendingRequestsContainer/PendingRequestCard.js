@@ -1,6 +1,7 @@
 import React from 'react'
 import {useSelector} from "react-redux"
 import { getDistance, convertDistance } from 'geolib'
+import RequestedItemCard from "./RequestedItemCard"
 
 function PendingRequestCard({request}) {
 
@@ -25,6 +26,10 @@ function PendingRequestCard({request}) {
         </td>
     )
 
+    const requestedItems = request.request_items.map(reqItem=>{
+        return <RequestedItemCard key={reqItem.id} reqItem={reqItem} />
+    })
+
 
     return (
         <div className="request-card">
@@ -38,10 +43,11 @@ function PendingRequestCard({request}) {
                 </tr>
             </tbody>
         </table>
-        <div className="request-items">
-            <h4>Items Requested:</h4>
-            {/* {itemImages} */}
+            <h4>Items Requested</h4>
+        <div className="requested-items">
+            {requestedItems}
         </div>
+        <button>Accept Request</button>
     </div>
     )
 }
