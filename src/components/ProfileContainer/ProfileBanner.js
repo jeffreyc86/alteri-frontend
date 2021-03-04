@@ -1,4 +1,4 @@
-import { current } from '@reduxjs/toolkit'
+import { } from '@reduxjs/toolkit'
 import React from 'react'
 import {useSelector} from 'react-redux'
 
@@ -6,7 +6,6 @@ import {useSelector} from 'react-redux'
 function ProfileBanner () {
 
     const currentUser = useSelector(state=>state.user.currentUser)
-    
 
 
     return (

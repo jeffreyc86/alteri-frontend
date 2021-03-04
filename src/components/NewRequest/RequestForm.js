@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {useSelector} from "react-redux"
+import {useSelector, useDispatch} from "react-redux"
 import {useHistory} from 'react-router-dom'
 import ItemCard from './ItemCard.js'
 
@@ -105,7 +105,7 @@ function RequestForm () {
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({recipient_id: currentUser.id})
             })
-                .then(res=>res.json)
+                .then(res=>res.json())
                 .then(requestObj=>{
 
                     const requestId = requestObj.id
@@ -139,7 +139,7 @@ function RequestForm () {
 
                 })
             
-            history.push("/requests")
+            history.push("/profile")
         }
     }
 
@@ -147,7 +147,7 @@ function RequestForm () {
     return (
         <div className="request-form">
             <h2>How This Works</h2>
-            <p>To add items to your request, simply tap the add button. The default quantity per item on each request is one. However, you may request up to five of some Food items and up to three of some Clothing items. Please include any allergies and dietary restrictions for Food, as well as sizing preferences for clothing. We depend on the kindness and integrity of our users, so <strong>there is a limit of 10 items per request.</strong> </p>
+            <p>To add items to your request, simply tap the add button. The default quantity per item on each request is one. However, you may request up to five of some Food items and up to three of some Clothing items. Please include any allergies and dietary restrictions for Food, as well as sizing preferences for Clothing. We depend on the kindness and integrity of our users, so <strong>there is a limit of 10 items per request.</strong> </p>
             <p>Once you're complete, submit your request. You will receive a notification as soon as your request been accepted and a chat will be created for you to sort out logistics with your donor. <strong>We ALWAYS suggest meeting in a safe and public location.</strong></p>
             <div className="request-details">
                 {selectedItems.length === 10 ? <p>You have reached the maximum number of items</p> : null}

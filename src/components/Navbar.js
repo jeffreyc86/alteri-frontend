@@ -3,8 +3,6 @@ import { useSelector, useDispatch } from "react-redux"
 import {NavLink, useHistory} from 'react-router-dom'
 import { setCurrentLocation, setCurrentUser } from "../features/userSlice"
 
-
-
 function Navbar () {
 
     const history = useHistory()
@@ -46,6 +44,7 @@ function Navbar () {
                             {currentUser ? 
                                 <>  
                                     <NavLink to="/newrequest" exact>Create Request</NavLink>
+                                    <NavLink to="/pendingrequests" exact>Pending Requests</NavLink>
                                     <NavLink to="/profile" exact>Profile</NavLink>
                                     <NavLink to="/" exact onClick={handleLogOut}>Logout</NavLink>
                                 </>

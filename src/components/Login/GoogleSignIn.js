@@ -26,6 +26,7 @@ function GoogleSignIn (){
             .then(data => {
                 if (data.errors) {
                     data.errors.forEach(error=>alert(error))
+                    history.push("/signup")
                 }
                 else {
                     const { user, token } = data;
