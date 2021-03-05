@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {setCurrentUser, setCurrentLocation } from "../features/userSlice"
-import { setItems, setPendingRequests, setUserRequests, setUserDonations } from "../features/requestsSlice"
+import { setPendingRequests, setUserRequests, setUserDonations } from "../features/requestsSlice"
 import Navbar from "./Navbar"
 import SignInContainer from "./Login/SignInContainer"
 import SignUpContainer from './SignUp/SignUpContainer';
@@ -10,6 +10,7 @@ import ProfileContainer from './ProfileContainer/ProfileContainer'
 import RequestContainer from './NewRequest/RequestContainer'
 import Footer from './Footer'
 import PendingRequestContainer from './PendingRequestsContainer/PendingRequestsContainer';
+import MessagesContainer from './MessagesContainer/MessagesContainer';
 
 function App() {
 
@@ -31,10 +32,9 @@ function App() {
           dispatch(action)
         });
     }
-    getCurrentLocation()
   },[dispatch])
 
-  function getCurrentLocation(){
+  const getCurrentLocation = useCallback(() => {
     navigator.permissions.query({name:'geolocation'})
         .then(function(result) {
             if (result.state === 'granted') {
@@ -52,8 +52,12 @@ function App() {
                 alert("Your location is required to use this app. You may always change the permissions within your internet settings.")
             }
         })
-  }
+  }, [dispatch])
 
+  useEffect(()=>{
+    getCurrentLocation()
+  }, [getCurrentLocation])
+  
   useEffect(()=>{
     if (currentUser) {
         fetch(`${process.env.REACT_APP_RAILS_URL}updatelocation/${currentUser.id}`, {
@@ -66,7 +70,6 @@ function App() {
 
   useEffect(()=>{
     dispatch(setPendingRequests())
-    dispatch(setItems())
   },[dispatch])
 
   useEffect(()=>{
@@ -81,7 +84,7 @@ function App() {
                 dispatch(donatedRequestAction)
             })
     }
-  }, [currentUser])
+  }, [currentUser, dispatch])
 
   return (
     <div className="App">
@@ -102,6 +105,10 @@ function App() {
         <Route exact path="/pendingrequests">
           <PendingRequestContainer />
         </Route>
+        <Route exact path="/messages">
+          <MessagesContainer />
+        </Route>
+        
       </Switch>
       <Footer />
     </div>

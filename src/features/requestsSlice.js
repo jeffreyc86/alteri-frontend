@@ -5,11 +5,6 @@ export const setPendingRequests = createAsyncThunk('requests/setPendingRequests'
         return fetch(`${process.env.REACT_APP_RAILS_URL}pendingrequests`).then(res=>res.json())
     })
 
-export const setItems = createAsyncThunk('requests/setItems', 
-    async () => {
-        return fetch(`${process.env.REACT_APP_RAILS_URL}items`).then(res=>res.json())
-    })
-
 const requestsSlice = createSlice({
     name: "requests",
     initialState: {
@@ -38,6 +33,10 @@ const requestsSlice = createSlice({
         createNewRequest(state, action) {
             state.allPendingRequests = [...state.allPendingRequests, action.payload]
             state.userRequests = [...state.userRequests, action.payload]
+        },
+        acceptRequest(state,action){
+            state.allPendingRequests = state.allPendingRequests.filter(req => req.id !== action.payload.id)
+            state.userDonations = [...state.userDonations, action.payload]
         }
     }, extraReducers: {
         [setPendingRequests.pending](state) {
@@ -50,12 +49,9 @@ const requestsSlice = createSlice({
         [setPendingRequests.rejected](state) {
             state.status = "failed"
         },
-        [setItems.fulfilled](state, action) {
-            state.items = action.payload
-        },
     }
 })
 
-export const { updatePendingRequests, setUserRequests, setUserDonations, createNewRequest } = requestsSlice.actions
+export const { updatePendingRequests, setUserRequests, setUserDonations, createNewRequest, acceptRequest } = requestsSlice.actions
 
 export default requestsSlice.reducer

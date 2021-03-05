@@ -1,15 +1,22 @@
-import React, {useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import PendingRequestCard from "./PendingRequestCard"
-import { useSelector, useDispatch} from "react-redux"
+import { useSelector} from "react-redux"
 
 
 function PendingRequestContainer () {
 
-    const dispatch = useDispatch()
-
+    const [openRequests, setOpenRequests] = useState([])
+    
+    const currentUser = useSelector(state=>state.user.currentUser)
     const pendingRequests = useSelector(state=>state.requests.allPendingRequests)
 
-    const pendingReqCards = pendingRequests.map(request => {
+    useEffect(()=>{
+        if (currentUser)
+        setOpenRequests([...pendingRequests].filter(req => req.recipient_id !== currentUser.id))
+    },[pendingRequests, currentUser])
+
+
+    const pendingReqCards = openRequests.map(request => {
             return <PendingRequestCard key={request.id} request={request} />
         })
 

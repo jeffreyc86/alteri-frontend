@@ -26,9 +26,9 @@ code {
 
 .navbar{
   background-color: white;
-  height: 35px;
-  padding-top: 2px;
-  padding-bottom: 2px;
+  height: 3vw;
+  padding-top: .2vw;
+  padding-bottom: .2vw;
 }
 
 .navbar a{
@@ -44,7 +44,7 @@ code {
 }
 
 .navbar-logo{
-  height: 33px;
+  height: 2.8vw;
   margin-top: 1px;
   margin-bottom: 1px;
   margin-right: 5px;
@@ -52,6 +52,7 @@ code {
 
 .navbar-left {
   float: left;
+  display: flex;
 }
 
 .dropdown {
@@ -60,16 +61,31 @@ code {
 }
 
 .dropbtn{
-  height: 31px;
-  padding-left: 4px; 
-  padding-right: 4px;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  height: 2.6vw;
+  padding-left: .5vw; 
+  padding-right: .5vw;
+  margin-top: .2vw;
+  margin-bottom: .2vw;
+  border: .25px solid #c0c0c0;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+.dropbtn:hover {
+  background-color: #b2b2b2;
+}
+
+.mess-drop-btn{
+  height: 2.6vw;
+  padding-left: .5vw; 
+  padding-right: .5vw;
+  margin-top: .2vw;
+  margin-bottom: .2vw;
   border: .25px solid #c0c0c0;
   border-radius: 3px;
 }
 
-.dropbtn:hover {
+.mess-drop-btn:hover {
   background-color: #b2b2b2;
 }
 
@@ -78,13 +94,18 @@ code {
 }
 
 .menu-btn{
-  height: 23px;
+  height: 2vw;
+  padding: 0px;
+}
+
+.mess-btn{
+  height: 2.2vw;
   padding: 0px;
 }
 
 .navbar-left span{
-  font-size: 20px;
-  padding: 5px;
+  font-size: 1.7vw;
+  padding: .4vw;
   display: block;
   line-height: normal
 }
@@ -110,6 +131,121 @@ code {
 .dropdown-content a:hover{
   font-weight: bold;
   color: #0492c2
+}
+
+@media screen and (max-width: 600px) {
+  .navbar{
+    background-color: white;
+    height: 5vw;
+    padding-top: .2vw;
+    padding-bottom: .2vw;
+  }
+  
+  .navbar a{
+    color: black;
+  }
+  
+  .navbar a:visited{
+    color: black;
+  }
+  
+  .navbar-right{
+    float: right;
+  }
+  
+  .navbar-logo{
+    height: 2.8vw;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    margin-right: 5px;
+  }
+  
+  .navbar-left {
+    float: left;
+    display: flex;
+    margin-top: 1vw;
+    margin-left: .5vw;
+  }
+  
+  .dropdown {
+    margin-left: 5px;
+    overflow: hidden;
+  }
+  
+  .dropbtn{
+    height: 2.6vw;
+    padding-left: .5vw; 
+    padding-right: .5vw;
+    margin-top: .2vw;
+    margin-bottom: .2vw;
+    border: .25px solid #c0c0c0;
+    border-radius: 3px;
+    vertical-align: middle;
+  }
+  
+  .dropbtn:hover {
+    background-color: #b2b2b2;
+  }
+  
+  .mess-drop-btn{
+    height: 2.6vw;
+    padding-left: .5vw; 
+    padding-right: .5vw;
+    margin-top: .2vw;
+    margin-bottom: .2vw;
+    border: .25px solid #c0c0c0;
+    border-radius: 3px;
+    text-align: center;
+  }
+  
+  .mess-drop-btn:hover {
+    background-color: #b2b2b2;
+  }
+  
+  .menu-div{
+    display: inline-flex;
+  }
+  
+  .menu-btn{
+    height: 2vw;
+    padding: 0px;
+  }
+  
+  .mess-btn{
+    height: 2.2vw;
+    padding: 0px;
+  }
+  
+  .navbar-left span{
+    font-size: 1.7vw;
+    padding: .4vw;
+    display: block;
+    line-height: normal
+  }
+  
+  .dropdown-content {
+    background-color: #f3f3f3;
+    min-width: 12vw;
+    overflow: auto;
+    z-index: 1;
+    position: absolute;
+    box-shadow: 0px 8px 8px 0px rgba(0,0,0,0.2);
+    font-size: 2vw;
+  }
+  
+  .dropdown-content a {
+    float: none;
+    color: black;
+    padding: .5px .5px;
+    text-decoration: none;
+    display: flex;
+    justify-content: left;
+  }
+  
+  .dropdown-content a:hover{
+    font-weight: bold;
+    color: #0492c2
+  }
 }
 
 /* **************Footer************** */
@@ -429,6 +565,8 @@ code {
   background-color: white;
   margin: 10px auto;
   padding-bottom: 10px;
+  border: solid .25px #dedede;
+  
 }
 
 .request-container img{
@@ -615,6 +753,7 @@ code {
     background-color: white;
     margin: 1.5vw auto;
     padding-bottom: 1vw;
+    border: solid .25px #dedede;
   }
 
   .request-container img{
@@ -863,3 +1002,34 @@ code {
 .accept-btn-div button:hover{
   background-color: #0492c2;
 }
+
+/* **************Message Container************** */
+.messages-container{
+  width: 85vw;
+  background-color: white;
+  border: solid .25px #dedede;
+  margin: 1vw auto;
+}
+.messages-area {
+  width: 85vw;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  margin: 1vw auto;
+  background-color: white;
+  }
+  
+  .message-list{ 
+    grid-area: 1 / 1 / 6 / 3; 
+    border: solid .25px red;
+    margin: 0 1vw;
+    margin-right: 0;
+  }
+
+  .chat-container{ 
+    grid-area: 1 / 3 / 6 / 8; 
+    border: solid .25px red;
+    margin: 0 1vw;
+  }

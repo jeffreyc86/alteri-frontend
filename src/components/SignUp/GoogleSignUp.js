@@ -1,5 +1,5 @@
 import { useHistory } from 'react-router-dom'
-import React, {useState} from 'react'
+import React from 'react'
 import { GoogleLogin } from 'react-google-login';
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../features/userSlice"

@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 // import {useHistory} from 'react-router-dom'
-import {useSelector, useDispatch} from "react-redux"
+// import {useSelector, useDispatch} from "react-redux"
 
 import ProfileBanner from "./ProfileBanner"
 import RequestsListContainer from './RequestListsContainer/RequestListContainer'

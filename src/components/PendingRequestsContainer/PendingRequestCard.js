@@ -1,5 +1,6 @@
 import React from 'react'
-import {useSelector} from "react-redux"
+import {useSelector, useDispatch} from "react-redux"
+import {acceptRequest} from "../../features/requestsSlice"
 import { getDistance, convertDistance } from 'geolib'
 import RequestedItemCard from "./RequestedItemCard"
 
@@ -7,6 +8,7 @@ function PendingRequestCard({request}) {
 
     const currentLocation = useSelector(state=>state.user.currentLocation)
     const currentUser = useSelector(state=>state.user.currentUser)
+    const dispatch = useDispatch()
 
     let distanceFrom 
 
@@ -32,6 +34,18 @@ function PendingRequestCard({request}) {
     })
 
     function handleClick () {
+        fetch(`${process.env.REACT_APP_RAILS_URL}acceptrequest/${request.id}`,{
+            method: 'PATCH',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({donor_id: currentUser.id})
+            })
+            .then(res=>res.json())
+            .then(data => {
+                dispatch(acceptRequest(data.request))
+                console.log(data.conversation)
+            })
+
+        
         
     }
 
@@ -53,7 +67,7 @@ function PendingRequestCard({request}) {
             {requestedItems}
         </div>
         <div className="accept-btn-div">
-            <button>Accept Request</button>
+            <button onClick={handleClick}>Accept Request</button>
         </div>
     </div>
     )

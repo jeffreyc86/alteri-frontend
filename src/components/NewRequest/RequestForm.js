@@ -8,31 +8,34 @@ import ItemCard from './ItemCard.js'
 function RequestForm () {
 
     const currentUser = useSelector(state=>state.user.currentUser)
-    const items = useSelector(state=>state.requests.items)
     const history = useHistory()
     const dispatch = useDispatch()
     
     const [selectedItems, setSelectedItems] = useState([])
-    const [itemsArr, setItemsArr] = useState([])
+    const [items, setItems] = useState([])
     const [filter, setFilter] = useState("")
 
 
     useEffect(()=>{
-        const newArray = items.map(item=>{
-            return {
-                ...item,
-                selected: false
-            }
-        })
-        setItemsArr(newArray)
+        fetch(`${process.env.REACT_APP_RAILS_URL}items`)
+            .then(res=>res.json())
+            .then(itemsArr => {
+                const newArray = itemsArr.map(item=>{
+                    return {
+                        ...item,
+                        selected: false
+                    }
+                })
+                setItems(newArray)
+            })
     }, [])
 
     function addToRequest(itemAdded) {
 
-        const item = itemsArr.find(item=> item.id === itemAdded.id)
+        const item = items.find(item=> item.id === itemAdded.id)
 
         if (item.selected === true) {
-            const newArray = itemsArr.map(item => {
+            const newArray = items.map(item => {
                 if (item.id === itemAdded.id) {
                     return {
                         ...item,
@@ -42,14 +45,14 @@ function RequestForm () {
                     return item
                 }
             })
-            setItemsArr(newArray)
+            setItems(newArray)
 
             const newArr = selectedItems.filter(item => item.id !== itemAdded.id)
             setSelectedItems(newArr)
         } else if (item.selected === false && selectedItems.length === 10) {
             alert(`There is a 10 item limit to each request. Please remove an item before adding ${item.name}.`)
         } else {
-            const newArray = itemsArr.map(item => {
+            const newArray = items.map(item => {
                 if (item.id === itemAdded.id) {
                     return {
                         ...item,
@@ -59,7 +62,7 @@ function RequestForm () {
                     return item
                 }
             })
-            setItemsArr(newArray)
+            setItems(newArray)
 
             const newArr = [...selectedItems, itemAdded]
             setSelectedItems(newArr)
@@ -67,7 +70,7 @@ function RequestForm () {
 
     }
 
-    const filteredItems = itemsArr.filter(item=>item.name.toLowerCase().includes(filter.toLowerCase()))
+    const filteredItems = items.filter(item=>item.name.toLowerCase().includes(filter.toLowerCase()))
         
     const filteredFoods = [...filteredItems].filter(item => item.category === "Food")
         .map(item => {
