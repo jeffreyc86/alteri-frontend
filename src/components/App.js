@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
-import {setCurrentUser, setCurrentLocation, setRequests, setDonatedRequests} from "../features/userSlice"
-import { setPendingRequests } from "../features/requestsSlice"
+import {setCurrentUser, setCurrentLocation } from "../features/userSlice"
+import { setItems, setPendingRequests, setUserRequests, setUserDonations } from "../features/requestsSlice"
 import Navbar from "./Navbar"
 import SignInContainer from "./Login/SignInContainer"
 import SignUpContainer from './SignUp/SignUpContainer';
@@ -34,20 +34,6 @@ function App() {
     getCurrentLocation()
   },[dispatch])
 
-  useEffect(()=>{
-      if (currentUser) {
-          fetch(`${process.env.REACT_APP_RAILS_URL}usersrequests/${currentUser.id}`)
-              .then(res=>res.json())
-              .then(data=>{
-                  const { requests, donated_requests } = data
-                  const requestAction = setRequests(requests)
-                  const donatedRequestAction = setDonatedRequests(donated_requests)
-                  dispatch(requestAction)
-                  dispatch(donatedRequestAction)
-              })
-      }
-  }, [currentUser])
-
   function getCurrentLocation(){
     navigator.permissions.query({name:'geolocation'})
         .then(function(result) {
@@ -76,8 +62,26 @@ function App() {
             body: JSON.stringify(currentLocation)
         })
     }
-    dispatch(setPendingRequests())
   }, [currentLocation])
+
+  useEffect(()=>{
+    dispatch(setPendingRequests())
+    dispatch(setItems())
+  },[dispatch])
+
+  useEffect(()=>{
+    if (currentUser) {
+        fetch(`${process.env.REACT_APP_RAILS_URL}usersrequests/${currentUser.id}`)
+            .then(res=>res.json())
+            .then(data=>{
+                const { requests, donated_requests } = data
+                const requestAction = setUserRequests(requests)
+                const donatedRequestAction = setUserDonations(donated_requests)
+                dispatch(requestAction)
+                dispatch(donatedRequestAction)
+            })
+    }
+  }, [currentUser])
 
   return (
     <div className="App">

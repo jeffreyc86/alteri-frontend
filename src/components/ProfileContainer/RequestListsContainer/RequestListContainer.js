@@ -4,15 +4,15 @@ import RequestCard from './RequestCard'
 
 function RequestsListContainer () {
 
-    const requests = useSelector(state=>state.user.requests)
-    const donatedRequests = useSelector(state=>state.user.donatedRequests)
+    const requests = useSelector(state=>state.requests.userRequests)
+    const donatedRequests = useSelector(state=>state.requests.userDonations)
 
 
-    const pendingRequests = [...requests].map(request => {
+    const pendingRequests = requests.map(request => {
             return <RequestCard key={request.id} request={request} />
         })
 
-    const donationRequests = [...donatedRequests].map(request => {
+    const donationRequests = donatedRequests.map(request => {
             return <RequestCard key={request.id} request={request} />
         })
     

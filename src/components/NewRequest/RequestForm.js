@@ -1,39 +1,38 @@
 import React, {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from "react-redux"
 import {useHistory} from 'react-router-dom'
+import { createNewRequest } from "../../features/requestsSlice"
 import ItemCard from './ItemCard.js'
 
 
 function RequestForm () {
 
     const currentUser = useSelector(state=>state.user.currentUser)
+    const items = useSelector(state=>state.requests.items)
     const history = useHistory()
+    const dispatch = useDispatch()
     
     const [selectedItems, setSelectedItems] = useState([])
-    const [items, setItems] = useState([])
+    const [itemsArr, setItemsArr] = useState([])
     const [filter, setFilter] = useState("")
 
 
     useEffect(()=>{
-        fetch(`${process.env.REACT_APP_RAILS_URL}items`)
-            .then(res=>res.json())
-            .then(itemsArr => {
-                const newArray = itemsArr.map(item=>{
-                    return {
-                        ...item,
-                        selected: false
-                    }
-                })
-                setItems(newArray)
-            })
+        const newArray = items.map(item=>{
+            return {
+                ...item,
+                selected: false
+            }
+        })
+        setItemsArr(newArray)
     }, [])
 
     function addToRequest(itemAdded) {
 
-        const item = items.find(item=> item.id === itemAdded.id)
+        const item = itemsArr.find(item=> item.id === itemAdded.id)
 
         if (item.selected === true) {
-            const newArray = items.map(item => {
+            const newArray = itemsArr.map(item => {
                 if (item.id === itemAdded.id) {
                     return {
                         ...item,
@@ -43,14 +42,14 @@ function RequestForm () {
                     return item
                 }
             })
-            setItems(newArray)
+            setItemsArr(newArray)
 
             const newArr = selectedItems.filter(item => item.id !== itemAdded.id)
             setSelectedItems(newArr)
         } else if (item.selected === false && selectedItems.length === 10) {
             alert(`There is a 10 item limit to each request. Please remove an item before adding ${item.name}.`)
         } else {
-            const newArray = items.map(item => {
+            const newArray = itemsArr.map(item => {
                 if (item.id === itemAdded.id) {
                     return {
                         ...item,
@@ -60,7 +59,7 @@ function RequestForm () {
                     return item
                 }
             })
-            setItems(newArray)
+            setItemsArr(newArray)
 
             const newArr = [...selectedItems, itemAdded]
             setSelectedItems(newArr)
@@ -68,7 +67,7 @@ function RequestForm () {
 
     }
 
-    const filteredItems = items.filter(item=>item.name.toLowerCase().includes(filter.toLowerCase()))
+    const filteredItems = itemsArr.filter(item=>item.name.toLowerCase().includes(filter.toLowerCase()))
         
     const filteredFoods = [...filteredItems].filter(item => item.category === "Food")
         .map(item => {
@@ -100,45 +99,16 @@ function RequestForm () {
         if (selectedItems.length < 1) {
             alert("Please select the items you need prior to submitting the request.")
         } else {
+            const recipient_id = currentUser.id
             fetch(`${process.env.REACT_APP_RAILS_URL}requests`, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({recipient_id: currentUser.id})
+                body: JSON.stringify({ recipient_id, selectedItems })
             })
                 .then(res=>res.json())
                 .then(requestObj=>{
-
-                    const requestId = requestObj.id
-
-                    selectedItems.forEach(item=>{
-                        let itemObj
-
-                        if (item.preference) {
-                            itemObj = {
-                                item_id: item.id,
-                                request_id: requestId,
-                                preference: item.preference,
-                                quantity: item.quantity
-                            }
-                        } else {
-                            itemObj = {
-                                item_id: item.id,
-                                request_id: requestId,
-                                quantity: item.quantity
-                            }
-                        }
-                        
-                        fetch(`${process.env.REACT_APP_RAILS_URL}request_items`, {
-                            method: 'POST',
-                            headers: {"Content-Type": "application/json"},
-                            body: JSON.stringify(itemObj)
-                        })
-                            .then(res=>res.json())
-                            .then(console.log)
-                    })
-
+                    dispatch(createNewRequest(requestObj))
                 })
-            
             history.push("/profile")
         }
     }

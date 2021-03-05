@@ -1,19 +1,17 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import PendingRequestCard from "./PendingRequestCard"
 import { useSelector, useDispatch} from "react-redux"
 
 
 function PendingRequestContainer () {
 
-    const pendingRequests = useSelector(state=>state.requests.pendingRequests)
+    const dispatch = useDispatch()
 
-    let pendingReqCards
-    
-    if (pendingRequests.length > 1) {
-        pendingReqCards = pendingRequests.map(request => {
+    const pendingRequests = useSelector(state=>state.requests.allPendingRequests)
+
+    const pendingReqCards = pendingRequests.map(request => {
             return <PendingRequestCard key={request.id} request={request} />
         })
-    }
 
     return (
         <div className="pending-req-container">

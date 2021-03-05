@@ -6,6 +6,7 @@ import RequestedItemCard from "./RequestedItemCard"
 function PendingRequestCard({request}) {
 
     const currentLocation = useSelector(state=>state.user.currentLocation)
+    const currentUser = useSelector(state=>state.user.currentUser)
 
     let distanceFrom 
 
@@ -30,6 +31,10 @@ function PendingRequestCard({request}) {
         return <RequestedItemCard key={reqItem.id} reqItem={reqItem} />
     })
 
+    function handleClick () {
+        
+    }
+
 
     return (
         <div className="request-card">
@@ -43,11 +48,13 @@ function PendingRequestCard({request}) {
                 </tr>
             </tbody>
         </table>
-            <h4>Items Requested</h4>
+        <h5>Items Requested</h5>
         <div className="requested-items">
             {requestedItems}
         </div>
-        <button>Accept Request</button>
+        <div className="accept-btn-div">
+            <button>Accept Request</button>
+        </div>
     </div>
     )
 }
