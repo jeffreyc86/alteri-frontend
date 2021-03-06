@@ -1,8 +1,8 @@
 import React from 'react'
 import ChatBanner from './ChatBanner'
-import ChatMessageCard from './ChatMessageCard'
 import {useSelector} from 'react-redux'
-
+import ChatBox from './ChatBox'
+import MessageForm from './MessageForm'
 
 function ChatArea () {
 
@@ -11,7 +11,8 @@ function ChatArea () {
     return (
         <div className="chat-area">
                 <ChatBanner />
-
+                <ChatBox />
+                <MessageForm />
         </div>
     )
 }

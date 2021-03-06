@@ -43,7 +43,8 @@ function ChatBanner () {
     return (
         <div className="chat-banner">
             <div className="chat-banner-left">
-                Request #{requestId}
+                <h2>Request #{requestId}</h2>
+                <button>Mark As Fulfilled</button>
             </div>
             <div className="chat-banner-right">
                 <div className="cb-dropdown">
