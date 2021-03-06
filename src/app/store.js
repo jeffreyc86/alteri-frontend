@@ -10,7 +10,7 @@ const store = configureStore({
     user: userReducer,
     requests: requestsReducer,
     messages: messagesReducer,
-    conversations: conversationsReducer
+    conversations: conversationsReducer,
   },
 });
 

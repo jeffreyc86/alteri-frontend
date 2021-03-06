@@ -11,14 +11,16 @@ function PendingRequestCard({request}) {
     const currentUser = useSelector(state=>state.user.currentUser)
     const dispatch = useDispatch()
 
-    let distanceFrom 
+    let distanceFrom = "Unavailable"
 
-        if (currentLocation) {
-            distanceFrom = Math.round(
+        if (currentLocation && request.recipient_loc.lat) {
+            const distance = Math.round(
                 convertDistance(getDistance(
                     { latitude: currentLocation.lat, longitude: currentLocation.lng },
                     { latitude: request.recipient_loc.lat, longitude: request.recipient_loc.lng }
                 ), 'mi') * 100).toFixed(1)
+            
+            distanceFrom = `${distance} mi`
         }
 
     const requestRecipient = (
@@ -59,7 +61,7 @@ function PendingRequestCard({request}) {
                     <td>#{request.id}</td>
                     <td>{request.created_date}</td>
                     {requestRecipient}
-                    <td>{distanceFrom} mi</td>
+                    <td>{distanceFrom}</td>
                 </tr>
             </tbody>
         </table>

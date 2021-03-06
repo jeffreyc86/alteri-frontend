@@ -9,11 +9,15 @@ const conversationsSlice = createSlice({
     name: "conversations",
     initialState: {
         userConvos: [],
+        convoId: 0,
         status: null
         },
     reducers: {
         addConvo(state, action){
             state.userConvos = [...state.userConvos, action.payload]
+        },
+        setConvoId(state,action){
+            state.convoId = action.payload
         }
     }, 
     extraReducers: {
@@ -30,6 +34,6 @@ const conversationsSlice = createSlice({
     }
 })
 
-export const { addConvo } = conversationsSlice.actions
+export const { addConvo, setConvoId } = conversationsSlice.actions
 
 export default conversationsSlice.reducer

@@ -5,6 +5,7 @@ import {setCurrentUser, setCurrentLocation } from "../features/userSlice"
 import { setPendingRequests, setUserRequests, setUserDonations } from "../features/requestsSlice"
 import { fetchAllMessages } from "../features/messagesSlice"
 import { fetchUserConvos } from "../features/conversationsSlice"
+import consumer from './cable'
 
 import Navbar from "./Navbar"
 import SignInContainer from "./Login/SignInContainer"
@@ -21,6 +22,7 @@ function App() {
   const dispatch = useDispatch()
   const currentUser = useSelector(state => state.user.currentUser)
   const currentLocation = useSelector(state => state.user.currentLocation)
+  const userConvos = useSelector(state=>state.conversations.userConvos)
 
   useEffect(()=>{
     const token = localStorage.getItem("token")
@@ -59,9 +61,9 @@ function App() {
 
   useEffect(()=>{
     getCurrentLocation()
-  }, [getCurrentLocation])
+  }, [getCurrentLocation, currentUser])
   
-  const updateLocation = useCallback(()=>{
+   useEffect(()=>{
     if (currentUser) {
         fetch(`${process.env.REACT_APP_RAILS_URL}updatelocation/${currentUser.id}`, {
             method: 'PATCH',
@@ -69,9 +71,7 @@ function App() {
             body: JSON.stringify(currentLocation)
         })
     }
-  }, [currentLocation, currentUser])
-
-  updateLocation()
+  }, [currentUser, currentLocation])
 
   useEffect(()=>{
     dispatch(setPendingRequests())
@@ -97,6 +97,26 @@ function App() {
             })
     }
   }, [currentUser, dispatch])
+
+
+  useEffect(() => {
+
+    userConvos.forEach(convo=>{
+
+      const subscription = consumer.subscriptions.create({
+          channel: "MessageChannel",
+          id: convo.id
+      },{
+          received: (message) => {console.log(message)}
+      })
+  
+      return () => {
+          subscription.unsubscribe()
+      }
+    })
+
+
+  }, [userConvos])
 
   return (
     <div className="App">
