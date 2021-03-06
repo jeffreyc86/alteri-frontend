@@ -1,11 +1,13 @@
 import React from 'react'
 import ChatMessageCard from './ChatMessageCard'
 
-function ChatContainer () {
+
+function ChatContainer ({convoId}) {
+
 
     return (
         <div className="chat-container">
-            testtttt
+            {convoId === 0 ? <p>Select a Conversation on the left</p> : "testing"}
         </div>
     )
 }

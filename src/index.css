@@ -1033,3 +1033,25 @@ code {
     border: solid .25px red;
     margin: 0 1vw;
   }
+
+  .convo-card{
+    font-size: 1.8vw;
+    margin: .5vw auto;
+    border: solid 1px black;
+    width: 20vw
+
+
+  }
+
+  .cc-req-match{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cc-req-match img{
+    border-radius: 50%;
+    width: 2.8vw;
+    height: 2.8vw;
+    margin-right: .5vw;
+  }

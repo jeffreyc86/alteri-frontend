@@ -3,6 +3,9 @@ import { Route, Switch } from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {setCurrentUser, setCurrentLocation } from "../features/userSlice"
 import { setPendingRequests, setUserRequests, setUserDonations } from "../features/requestsSlice"
+import { fetchAllMessages } from "../features/messagesSlice"
+import { fetchUserConvos } from "../features/conversationsSlice"
+
 import Navbar from "./Navbar"
 import SignInContainer from "./Login/SignInContainer"
 import SignUpContainer from './SignUp/SignUpContainer';
@@ -11,6 +14,7 @@ import RequestContainer from './NewRequest/RequestContainer'
 import Footer from './Footer'
 import PendingRequestContainer from './PendingRequestsContainer/PendingRequestsContainer';
 import MessagesContainer from './MessagesContainer/MessagesContainer';
+
 
 function App() {
 
@@ -28,8 +32,7 @@ function App() {
       })
         .then((r) => r.json())
         .then((user) => {
-          const action = setCurrentUser(user);
-          dispatch(action)
+          dispatch(setCurrentUser(user)); 
         });
     }
   },[dispatch])
@@ -58,7 +61,7 @@ function App() {
     getCurrentLocation()
   }, [getCurrentLocation])
   
-  useEffect(()=>{
+  const updateLocation = useCallback(()=>{
     if (currentUser) {
         fetch(`${process.env.REACT_APP_RAILS_URL}updatelocation/${currentUser.id}`, {
             method: 'PATCH',
@@ -66,11 +69,20 @@ function App() {
             body: JSON.stringify(currentLocation)
         })
     }
-  }, [currentLocation])
+  }, [currentLocation, currentUser])
+
+  updateLocation()
 
   useEffect(()=>{
     dispatch(setPendingRequests())
   },[dispatch])
+
+  useEffect(()=>{
+    if (currentUser) {
+      dispatch(fetchAllMessages(currentUser.id))
+      dispatch(fetchUserConvos(currentUser.id))
+    }
+  },[currentUser, dispatch])
 
   useEffect(()=>{
     if (currentUser) {
@@ -105,7 +117,7 @@ function App() {
         <Route exact path="/pendingrequests">
           <PendingRequestContainer />
         </Route>
-        <Route exact path="/messages">
+        <Route exact path="/messages/">
           <MessagesContainer />
         </Route>
         

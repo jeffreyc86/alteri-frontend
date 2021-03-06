@@ -1,6 +1,7 @@
 import React from 'react'
 import {useSelector, useDispatch} from "react-redux"
 import {acceptRequest} from "../../features/requestsSlice"
+import {addConvo} from "../../features/conversationsSlice"
 import { getDistance, convertDistance } from 'geolib'
 import RequestedItemCard from "./RequestedItemCard"
 
@@ -42,7 +43,7 @@ function PendingRequestCard({request}) {
             .then(res=>res.json())
             .then(data => {
                 dispatch(acceptRequest(data.request))
-                console.log(data.conversation)
+                dispatch(addConvo(data.conversation))
             })
 
         
