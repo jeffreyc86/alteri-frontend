@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
-import {setCurrentUser, setCurrentLocation } from "../features/userSlice"
-import { setPendingRequests, setUserRequests, setUserDonations } from "../features/requestsSlice"
+import {setCurrentUser, setCurrentLocation, addMembership } from "../features/userSlice"
+import { setPendingRequests, setUserRequests, setUserDonations, updatePendingRequests, updateUserRequests, addPendingRequest } from "../features/requestsSlice"
 import { addMessage, fetchAllMessages } from "../features/messagesSlice"
-import { fetchUserConvos } from "../features/conversationsSlice"
+import { fetchUserConvos, addConvo } from "../features/conversationsSlice"
 import consumer from './cable'
 
 import Navbar from "./Navbar"
@@ -23,6 +23,8 @@ function App() {
   const currentUser = useSelector(state => state.user.currentUser)
   const currentLocation = useSelector(state => state.user.currentLocation)
   const userConvos = useSelector(state=>state.conversations.userConvos)
+  const userRequests = useSelector(state=>state.requests.userRequests)
+  const pendingRequests = useSelector(state=>state.requests.allPendingRequests)
 
   useEffect(()=>{
     const token = localStorage.getItem("token")
@@ -107,8 +109,6 @@ function App() {
           channel: "MessageChannel",
           id: convo.id
       },{
-        connected: () => console.log("connected"),
-        disconnected: () => console.log("disconnected"),
         received: message => {
           dispatch(addMessage(message))
         }
@@ -120,7 +120,57 @@ function App() {
     })
 
 
-  }, [userConvos])
+  }, [userConvos, dispatch])
+
+  useEffect(() => {
+
+      const subscription = consumer.subscriptions.create({
+          channel: "PendingRequestsChannel",
+      },{
+        connected: ()=>{console.log("pending requests connected")},
+        received: request => {
+          dispatch(addPendingRequest(request))
+        }
+      })
+    
+      return () => {
+          subscription.unsubscribe()
+      }
+
+  }, [dispatch])
+
+  useEffect(() => {
+
+    if (userRequests.length > 0) {
+      const usersPendingRequests = [...userRequests].filter(req=>req.accepted === false)
+      
+      if (usersPendingRequests.length > 0) {
+        usersPendingRequests.forEach(request=>{
+
+          const subscription = consumer.subscriptions.create({
+              channel: "RequestChannel",
+              id: request.id
+          },{
+            connected: ()=>console.log("connected"),
+            received: data => {
+              const request = data[0]
+              const membership = data[1]
+              const conversation = data[2]
+              dispatch(updatePendingRequests(request))
+              dispatch(updateUserRequests(request))
+              dispatch(addMembership(membership))
+              dispatch(addConvo(conversation))
+            }
+          })
+        
+          return () => {
+              subscription.unsubscribe()
+          }
+        })
+      }
+    
+    }
+  }, [userRequests])
 
   return (
     <div className="App">

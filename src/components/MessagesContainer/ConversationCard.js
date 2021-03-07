@@ -5,6 +5,7 @@ import {setConvoId} from '../../features/conversationsSlice'
 function ConversationCard({conversation}){
 
     const currentUser = useSelector(state=>state.user.currentUser)
+    const userMemberships = useSelector(state=>state.user.memberships)
     const convoId = useSelector(state=>state.conversations.convoId)
     const userMessages = useSelector(state=>state.messages.allMessages)
 
@@ -47,8 +48,17 @@ function ConversationCard({conversation}){
 
     }
 
+    function handleClick () {
+        dispatch(setConvoId(conversation.id))
+
+        const membership = userMemberships.find(membership => membership.conversation_id === conversation.id)
+        
+
+        // fetch
+    }
+
     return (
-        <div className="convo-card" id={convoId === conversation.id ? "convo-selected" : null}onClick={()=>dispatch(setConvoId(conversation.id))}>
+        <div className="convo-card" id={convoId === conversation.id ? "convo-selected" : null} onClick={handleClick}>
             {reqMatch}
             
         </div>

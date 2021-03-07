@@ -10,7 +10,7 @@ function GoogleSignIn (){
     const history = useHistory()
     const dispatch = useDispatch()
 
-    const failedResponse = (res) => {
+    const failedResponse = () => {
         alert("There was an issue signing in through Google. Please try again.")
     }
 

@@ -1013,6 +1013,7 @@ code {
   border: solid .25px #dedede;
   margin: 1vw auto;
 }
+
 .messages-area {
   width: 85vw;
   display: grid;
@@ -1035,6 +1036,10 @@ code {
     overflow: auto;
   }
 
+  .convo-list::-webkit-scrollbar {
+    display: none;
+  }
+
   .chat-container{ 
     grid-area: 1 / 3 / 6 / 8; 
     border: solid .25px #dedede;
@@ -1047,9 +1052,14 @@ code {
   .convo-card{
     font-size: 1.8vw;
     margin: .5vw auto;
-    border: solid 1px black;
+    border: solid .25px #dedede;
+    border-radius: 3px;
     width: 20vw; 
     cursor: pointer;
+  }
+
+  .convo-card:hover{
+    border:#061430 solid .25px;
   }
 
   #convo-selected {
@@ -1194,6 +1204,11 @@ code {
   overflow: auto;
 }
 
+.chat-box::-webkit-scrollbar {
+  display: none;
+}
+
+
 /* **************Message Form************** */
 .new-message{
   display: flex;
@@ -1245,3 +1260,55 @@ code {
   line-height: 0;
 }
 
+/* **************Chat Box************** */
+.chat-mess-card{
+  border: solid .25px #dedede;
+  border-radius: 3px;
+  margin: 1vw;
+  display: block;
+  overflow: auto;
+}
+
+.chat-mess-card img{
+  border-radius: 50%;
+  width: 3vw;
+  height: 3vw;
+  margin: .5vw;
+}
+
+.chat-mess-card span{
+  color: #515151;
+  margin: .5vw;
+  margin-bottom: 0;
+  font-size: .8vw;
+  font-style: italic;
+}
+
+#sent{
+  background-color: #e6f3f8;
+}
+
+#received{
+  background-color: #f5f5f5;
+}
+
+.sent{
+  float: right;
+  text-align: right;
+}
+
+.received{
+  float: left;
+}
+
+.chat-mess-card p{
+  margin: .5vw;
+  width: 45vw;
+  word-wrap: break-word
+}
+
+.chat-mess-card hr{
+  visibility: hidden;
+  margin: 0;
+  margin-top: 4.5px;
+}

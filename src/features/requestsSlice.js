@@ -15,7 +15,13 @@ const requestsSlice = createSlice({
         },
     reducers: {
         updatePendingRequests(state, action) {
-            state.allPendingRequests = state.allPendingRequests.map(req => {
+            state.allPendingRequests = [...state.allPendingRequests].filter(req => req.id !== action.payload.id)
+        },
+        setUserRequests(state, action) {
+            state.userRequests = action.payload
+        },
+        updateUserRequests(state, action) {
+            state.userRequests = state.userRequests.map(req => {
                 if (req.id === action.payload.id) {
                     return action.payload
                 } else {
@@ -23,20 +29,19 @@ const requestsSlice = createSlice({
                 }
             })
         },
-        setUserRequests(state, action) {
-            state.userRequests = action.payload
-        },
         setUserDonations(state, action) {
             state.userDonations = action.payload
         },
         createNewRequest(state, action) {
-            state.allPendingRequests = [...state.allPendingRequests, action.payload]
             state.userRequests = [...state.userRequests, action.payload]
         },
         acceptRequest(state,action){
             state.allPendingRequests = state.allPendingRequests.filter(req => req.id !== action.payload.id)
             state.userDonations = [...state.userDonations, action.payload]
-        }
+        },
+        addPendingRequest(state, action){
+            state.allPendingRequests = [...state.allPendingRequests, action.payload]
+        },
     }, extraReducers: {
         [setPendingRequests.pending](state) {
             state.status = "loading"
@@ -51,6 +56,6 @@ const requestsSlice = createSlice({
     }
 })
 
-export const { updatePendingRequests, setUserRequests, setUserDonations, createNewRequest, acceptRequest } = requestsSlice.actions
+export const { updatePendingRequests, setUserRequests, updateUserRequests, setUserDonations, createNewRequest, acceptRequest, addPendingRequest } = requestsSlice.actions
 
 export default requestsSlice.reducer

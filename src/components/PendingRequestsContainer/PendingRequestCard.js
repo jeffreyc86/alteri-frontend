@@ -1,6 +1,7 @@
 import React from 'react'
 import {useSelector, useDispatch} from "react-redux"
 import {acceptRequest} from "../../features/requestsSlice"
+import {addMembership} from "../../features/userSlice"
 import {addConvo} from "../../features/conversationsSlice"
 import { getDistance, convertDistance } from 'geolib'
 import RequestedItemCard from "./RequestedItemCard"
@@ -46,9 +47,8 @@ function PendingRequestCard({request}) {
             .then(data => {
                 dispatch(acceptRequest(data.request))
                 dispatch(addConvo(data.conversation))
+                dispatch(addMembership(data.membership))
             })
-
-        
         
     }
 
