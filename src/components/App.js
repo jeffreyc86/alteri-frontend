@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {setCurrentUser, setCurrentLocation } from "../features/userSlice"
 import { setPendingRequests, setUserRequests, setUserDonations } from "../features/requestsSlice"
-import { fetchAllMessages } from "../features/messagesSlice"
+import { addMessage, fetchAllMessages } from "../features/messagesSlice"
 import { fetchUserConvos } from "../features/conversationsSlice"
 import consumer from './cable'
 
@@ -107,9 +107,13 @@ function App() {
           channel: "MessageChannel",
           id: convo.id
       },{
-          received: (message) => {console.log(message)}
+        connected: () => console.log("connected"),
+        disconnected: () => console.log("disconnected"),
+        received: message => {
+          dispatch(addMessage(message))
+        }
       })
-  
+    
       return () => {
           subscription.unsubscribe()
       }

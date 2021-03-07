@@ -1,9 +1,10 @@
 import React from 'react'
 
-function ChatMessageCard () {
+function ChatMessageCard ({message}) {
 
     return (
         <div className="chat-mess-card">
+            {message.content}
 
         </div>
     )

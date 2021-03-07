@@ -9,8 +9,15 @@ function ConversationCard({conversation}){
     const userMessages = useSelector(state=>state.messages.allMessages)
 
     const convoMessages = userMessages.filter(message => message.conversation_id === conversation.id)
-    const mostRecentMessage = convoMessages.splice(-1)
+    
+    let mostRecentMessage
+        if (convoMessages.length > 0) {
+            mostRecentMessage = convoMessages.splice(-1)[0].content
+        }
+
     const dispatch = useDispatch()
+
+  
 
     let reqMatch
 
@@ -22,7 +29,6 @@ function ConversationCard({conversation}){
                 <div className="message-details">
                     <span>{conversation.request_info.donor_name}</span>
                     <br/>
-                    test
                     {mostRecentMessage}
                 </div>
             </div>       

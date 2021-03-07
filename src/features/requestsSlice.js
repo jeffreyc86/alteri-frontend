@@ -8,7 +8,6 @@ export const setPendingRequests = createAsyncThunk('requests/setPendingRequests'
 const requestsSlice = createSlice({
     name: "requests",
     initialState: {
-        items: [],
         allPendingRequests: [],
         userRequests: [],
         userDonations: [],

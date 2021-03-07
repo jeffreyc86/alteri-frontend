@@ -6,6 +6,7 @@ function ChatBanner () {
     const [showItems, setShowItems] = useState(false)
     const [showMap, setShowMap] = useState(false)
 
+    const currentUser = useSelector(state=>state.user.currentUser)
     const convoId = useSelector(state=>state.conversations.convoId)
     const userConvos = useSelector(state=>state.conversations.userConvos)
     const userRequests = useSelector(state=>state.requests.userRequests)
@@ -40,11 +41,23 @@ function ChatBanner () {
         })
     }
 
+    let requestOrDonation
+    if (currentUser && request) {
+        if (request.donor_id === currentUser.id){
+            requestOrDonation = "Donation"
+        } else {
+            requestOrDonation = "Request"
+        }
+    }
+    
+
     return (
         <div className="chat-banner">
             <div className="chat-banner-left">
-                <h2>Request #{requestId}</h2>
-                <button>Mark As Fulfilled</button>
+                <h2>{requestOrDonation} #{requestId}</h2>
+                <div>
+                    <button>Mark As Fulfilled</button>
+                </div>
             </div>
             <div className="chat-banner-right">
                 <div className="cb-dropdown">
