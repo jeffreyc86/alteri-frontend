@@ -9,7 +9,7 @@ function ConversationList () {
 
     let convoCards 
     
-    if (userConvos.length > 1) {
+    if (userConvos.length > 0) {
         convoCards = userConvos.map((convo) => {
             return <ConversationCard key={convo.id} conversation={convo} />
         })

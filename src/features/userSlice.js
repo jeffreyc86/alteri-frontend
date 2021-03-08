@@ -17,10 +17,19 @@ const userSlice = createSlice({
         },
         addMembership(state,action) {
             state.memberships = [...state.memberships, action.payload]
+        },
+        updateMemberships(state, action){
+            const newArr = state.memberships.filter(memberS => memberS.id !== action.payload.id)
+            state.memberships = [...newArr, action.payload]
+        },
+        logoutUser(state){
+            state.currentUser = null
+            state.currentLocation = null
+            state.memberships = []
         }
     }
 })
 
-export const {setCurrentUser, setCurrentLocation, addMembership } = userSlice.actions
+export const {setCurrentUser, setCurrentLocation, addMembership, updateMemberships, logoutUser } = userSlice.actions
 
 export default userSlice.reducer

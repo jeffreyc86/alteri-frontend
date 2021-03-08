@@ -14,6 +14,9 @@ const messagesSlice = createSlice({
     reducers: {
         addMessage(state, action){
             state.allMessages = [...state.allMessages, action.payload]
+        },
+        logoutUserMessages(state){
+            state.allMessages = []
         }
     }, 
     extraReducers: {
@@ -30,6 +33,6 @@ const messagesSlice = createSlice({
     }
 })
 
-export const { addMessage } = messagesSlice.actions
+export const { addMessage, logoutUserMessages } = messagesSlice.actions
 
 export default messagesSlice.reducer

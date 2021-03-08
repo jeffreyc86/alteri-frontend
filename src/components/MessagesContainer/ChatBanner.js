@@ -1,10 +1,12 @@
 import React, {useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
+import { updateUserDonations, updateUserRequests} from "../../features/requestsSlice"
 
 function ChatBanner () {
 
     const [showItems, setShowItems] = useState(false)
     const [showMap, setShowMap] = useState(false)
+    const dispatch = useDispatch()
 
     const currentUser = useSelector(state=>state.user.currentUser)
     const convoId = useSelector(state=>state.conversations.convoId)
@@ -49,14 +51,42 @@ function ChatBanner () {
             requestOrDonation = "Request"
         }
     }
-    
+
+    function handleClick () {
+        fetch(`${process.env.REACT_APP_RAILS_URL}fulfillrequest/${request.id}`,{
+            method: 'PATCH',
+            headers: {"Content-Type": 'application/json'}
+        })
+            .then(res=>res.json())
+            .then(requestObj=>{
+                if (request.donor_id === currentUser.id) {
+                    dispatch(updateUserDonations(requestObj))
+                } else {
+                    dispatch(updateUserRequests(requestObj))
+                }
+            })
+    }
+
+    let fulfilled = null
+    if (request) {
+        if (request.fulfilled ) {
+            fulfilled = " - Fulfilled"
+        }
+    }
+
+    let button = null
+    if (request) {
+        if (!request.fulfilled ) {
+            button = <button onClick={handleClick}>Mark As Fulfilled</button>
+        }
+    }
 
     return (
         <div className="chat-banner">
             <div className="chat-banner-left">
-                <h2>{requestOrDonation} #{requestId}</h2>
+                <h2>{requestOrDonation} #{requestId}{fulfilled}</h2>
                 <div>
-                    <button>Mark As Fulfilled</button>
+                {button}
                 </div>
             </div>
             <div className="chat-banner-right">

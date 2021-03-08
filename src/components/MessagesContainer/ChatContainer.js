@@ -7,7 +7,6 @@ function ChatContainer () {
 
     const convoId = useSelector(state=>state.conversations.convoId)
 
-
     return (
         <div className="chat-container">
             {convoId === 0 ? <p>Select a Conversation on the left</p> : <ChatArea />}

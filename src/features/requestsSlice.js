@@ -21,13 +21,13 @@ const requestsSlice = createSlice({
             state.userRequests = action.payload
         },
         updateUserRequests(state, action) {
-            state.userRequests = state.userRequests.map(req => {
-                if (req.id === action.payload.id) {
-                    return action.payload
-                } else {
-                    return req
-                }
-            })
+            const newArray = [...state.userRequests].filter(req => req.id !== action.payload.id)
+            state.userRequests = [...newArray, action.payload]
+        },
+        updateUserDonations(state, action) {
+            const newArray = [...state.userDonations].filter(req => req.id !== action.payload.id)
+            debugger
+            state.userDonations = [...newArray, action.payload]
         },
         setUserDonations(state, action) {
             state.userDonations = action.payload
@@ -42,6 +42,10 @@ const requestsSlice = createSlice({
         addPendingRequest(state, action){
             state.allPendingRequests = [...state.allPendingRequests, action.payload]
         },
+        logoutUserRequests(state) {
+            state.userRequests = []
+            state.userDonations = []
+        }
     }, extraReducers: {
         [setPendingRequests.pending](state) {
             state.status = "loading"
@@ -56,6 +60,6 @@ const requestsSlice = createSlice({
     }
 })
 
-export const { updatePendingRequests, setUserRequests, updateUserRequests, setUserDonations, createNewRequest, acceptRequest, addPendingRequest } = requestsSlice.actions
+export const { updatePendingRequests, setUserRequests, updateUserRequests, updateUserDonations, setUserDonations, createNewRequest, acceptRequest, addPendingRequest, logoutUserRequests } = requestsSlice.actions
 
 export default requestsSlice.reducer

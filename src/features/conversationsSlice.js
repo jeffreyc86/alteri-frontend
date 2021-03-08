@@ -18,7 +18,10 @@ const conversationsSlice = createSlice({
         },
         setConvoId(state,action){
             state.convoId = action.payload
-        }
+        },
+        logoutUserConversations(state){
+            state.userConvos = []
+        },
     }, 
     extraReducers: {
         [fetchUserConvos.pending](state) {
@@ -34,6 +37,6 @@ const conversationsSlice = createSlice({
     }
 })
 
-export const { addConvo, setConvoId } = conversationsSlice.actions
+export const { addConvo, setConvoId, logoutUserConversations } = conversationsSlice.actions
 
 export default conversationsSlice.reducer

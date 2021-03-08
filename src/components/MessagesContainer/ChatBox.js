@@ -20,7 +20,7 @@ function ChatBox() {
         }
     
     let messageCards
-        if (convoMessages.length > 0) {
+        if (convoMessages && convoMessages.length > 0) {
             messageCards = convoMessages.map(message=>{
                 return <ChatMessageCard key={message.id} message={message} />
             })

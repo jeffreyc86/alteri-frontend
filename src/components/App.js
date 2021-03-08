@@ -52,6 +52,7 @@ function App() {
                         }
                     const action = setCurrentLocation(pos)
                     dispatch(action)
+                    
                 });
             } else if (result.state === 'prompt') {
                 getCurrentLocation()
@@ -102,23 +103,24 @@ function App() {
 
 
   useEffect(() => {
+    if (userConvos && userConvos.length > 0) {
 
-    userConvos.forEach(convo=>{
-
-      const subscription = consumer.subscriptions.create({
-          channel: "MessageChannel",
-          id: convo.id
-      },{
-        received: message => {
-          dispatch(addMessage(message))
+      userConvos.forEach(convo=>{
+  
+        const subscription = consumer.subscriptions.create({
+            channel: "MessageChannel",
+            id: convo.id
+        },{
+          received: message => {
+            dispatch(addMessage(message))
+          }
+        })
+      
+        return () => {
+            subscription.unsubscribe()
         }
       })
-    
-      return () => {
-          subscription.unsubscribe()
-      }
-    })
-
+    }
 
   }, [userConvos, dispatch])
 
@@ -170,7 +172,7 @@ function App() {
       }
     
     }
-  }, [userRequests])
+  }, [userRequests, dispatch])
 
   return (
     <div className="App">

@@ -1,8 +1,12 @@
-import React, {useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { updateMemberships} from '../../features/userSlice'
 import {setConvoId} from '../../features/conversationsSlice'
+import { isAfter, parseISO } from 'date-fns'
 
 function ConversationCard({conversation}){
+
+    const [newMessage,setNewMessage] = useState(false)
 
     const currentUser = useSelector(state=>state.user.currentUser)
     const userMemberships = useSelector(state=>state.user.memberships)
@@ -13,12 +17,23 @@ function ConversationCard({conversation}){
     
     let mostRecentMessage
         if (convoMessages.length > 0) {
-            mostRecentMessage = convoMessages.splice(-1)[0].content
+            mostRecentMessage = [...convoMessages].splice(-1)[0].content
         }
 
     const dispatch = useDispatch()
 
-  
+    const convoMembership = userMemberships.find(memberS => memberS.conversation_id === conversation.id)
+    
+    useEffect(()=>{
+        if (convoMessages.length > 0 && convoMembership) {
+            const lastMessage = [...convoMessages].splice(-1)[0]
+            if (isAfter(parseISO(lastMessage.created_at), parseISO(convoMembership.last_read))) {
+               setNewMessage(true)
+            } else {
+                setNewMessage(false)
+            }
+        }
+    }, [convoMembership, convoMessages])
 
     let reqMatch
 
@@ -30,8 +45,11 @@ function ConversationCard({conversation}){
                 <div className="message-details">
                     <span>{conversation.request_info.donor_name}</span>
                     <br/>
-                    {mostRecentMessage}
+                    <div className="most-recent-message">
+                        {mostRecentMessage}  
+                    </div>
                 </div>
+                {newMessage ? <span className="new-message-notification">●</span> : null}
             </div>       
         } else {
             reqMatch = 
@@ -40,21 +58,29 @@ function ConversationCard({conversation}){
                 <div className="message-details">
                     <span>{conversation.request_info.recipient_name}</span>
                     <br/>
-                    tst
-                    {mostRecentMessage}
+                    <div className="most-recent-message">{mostRecentMessage}</div>
                 </div>
+                {newMessage ? <span className="new-message-notification">●</span> : null}
             </div>   
         }
 
     }
 
     function handleClick () {
+        
         dispatch(setConvoId(conversation.id))
-
         const membership = userMemberships.find(membership => membership.conversation_id === conversation.id)
         
+        fetch(`${process.env.REACT_APP_RAILS_URL}memberships/${membership.id}`, {
+            method: 'PATCH',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({last_read: Date()})
+        })
+            .then(res=>res.json())
+            .then(updatedMembership=>{
+                dispatch(updateMemberships(updatedMembership))
+            })
 
-        // fetch
     }
 
     return (

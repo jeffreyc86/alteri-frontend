@@ -1,7 +1,10 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
 import {NavLink} from 'react-router-dom'
-import { setCurrentLocation, setCurrentUser } from "../features/userSlice"
+import { logoutUser } from "../features/userSlice"
+import { logoutUserMessages } from "../features/messagesSlice"
+import { logoutUserRequests } from "../features/requestsSlice"
+import { logoutUserConversations } from "../features/conversationsSlice"
 
 function MenuNav ({showMenu, setShowMenu}) {
 
@@ -11,10 +14,10 @@ function MenuNav ({showMenu, setShowMenu}) {
 
     function handleLogOut() {
         localStorage.removeItem("token")
-        const action = setCurrentUser(null);
-        dispatch(action)
-        const action2 = setCurrentLocation(null)
-        dispatch(action2)
+        dispatch(logoutUser())
+        dispatch(logoutUserRequests())
+        dispatch(logoutUserMessages())
+        dispatch(logoutUserConversations())
     }
 
     return(
