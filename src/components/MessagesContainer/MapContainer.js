@@ -50,7 +50,7 @@ function MapContainer ({request}) {
 
     return (
       // Important! Always set the container height explicitly
-      <div style={{ height: '30vh', width: '40vw' }}>
+      <div style={{ height: '35vh', width: '45vw' }}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API}}
           defaultCenter={currentLocation ? currentLocation : defaultProps.center}
