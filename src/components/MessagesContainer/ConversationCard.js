@@ -27,7 +27,7 @@ function ConversationCard({conversation}){
     useEffect(()=>{
         if (convoMessages.length > 0 && convoMembership) {
             const lastMessage = [...convoMessages].splice(-1)[0]
-            if (isAfter(parseISO(lastMessage.created_at), parseISO(convoMembership.last_read))) {
+            if (lastMessage.user_id !== currentUser.id && isAfter(parseISO(lastMessage.created_at), parseISO(convoMembership.last_read))) {
                setNewMessage(true)
             } else {
                 setNewMessage(false)

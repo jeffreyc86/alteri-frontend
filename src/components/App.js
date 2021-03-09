@@ -24,7 +24,6 @@ function App() {
   const currentLocation = useSelector(state => state.user.currentLocation)
   const userConvos = useSelector(state=>state.conversations.userConvos)
   const userRequests = useSelector(state=>state.requests.userRequests)
-  const pendingRequests = useSelector(state=>state.requests.allPendingRequests)
 
   useEffect(()=>{
     const token = localStorage.getItem("token")
@@ -52,7 +51,6 @@ function App() {
                         }
                     const action = setCurrentLocation(pos)
                     dispatch(action)
-                    
                 });
             } else if (result.state === 'prompt') {
                 getCurrentLocation()
@@ -101,25 +99,36 @@ function App() {
     }
   }, [currentUser, dispatch])
 
+  // subscriptions
+
+  const [convoSubs, setConvoSubs] = useState([])
 
   useEffect(() => {
+
+    convoSubs.forEach(sub =>{
+      sub.unsubscribe()
+    })
+
     if (userConvos && userConvos.length > 0) {
 
+      let newArr = []
       userConvos.forEach(convo=>{
   
         const subscription = consumer.subscriptions.create({
             channel: "MessageChannel",
             id: convo.id
         },{
+          connected: ()=>{console.log(`convo ${convo.id} connected`)},
           received: message => {
             dispatch(addMessage(message))
-          }
+          },
+          disconnected: ()=>{console.log(`convo ${convo.id} DISconnected`)}
         })
-      
-        return () => {
-            subscription.unsubscribe()
-        }
+
+        newArr.push(subscription)
+  
       })
+      setConvoSubs(newArr)
     }
 
   }, [userConvos, dispatch])
@@ -132,28 +141,31 @@ function App() {
         connected: ()=>{console.log("pending requests connected")},
         received: request => {
           dispatch(addPendingRequest(request))
-        }
+        },
+        disconnected: ()=>{console.log("pending requests DISconnected")}
       })
-    
-      return () => {
-          subscription.unsubscribe()
-      }
 
   }, [dispatch])
 
+  const [userReqSubs, setUserReqSubs] = useState([])
   useEffect(() => {
+
+    userReqSubs.forEach(sub =>{
+      sub.unsubscribe()
+    })
 
     if (userRequests.length > 0) {
       const usersPendingRequests = [...userRequests].filter(req=>req.accepted === false)
       
       if (usersPendingRequests.length > 0) {
+        let newArr = []
         usersPendingRequests.forEach(request=>{
 
           const subscription = consumer.subscriptions.create({
               channel: "RequestChannel",
               id: request.id
           },{
-            connected: ()=>console.log("connected"),
+            connected: ()=>{console.log(`request ${request.id} connected`)},
             received: data => {
               const request = data[0]
               const membership = data[1]
@@ -162,21 +174,29 @@ function App() {
               dispatch(updateUserRequests(request))
               dispatch(addMembership(membership))
               dispatch(addConvo(conversation))
-            }
+            },
+            disconnected: ()=>{console.log(`request ${request.id} DISconnected`)},
           })
-        
-          return () => {
-              subscription.unsubscribe()
-          }
+          
+          newArr.push(subscription)
+      
         })
+        setUserReqSubs(newArr)
       }
-    
+
     }
   }, [userRequests, dispatch])
 
+  function logoutSubscriptions (){
+
+    userReqSubs.forEach(sub => sub.unsubscribe())
+
+    convoSubs.forEach(sub => sub.unsubscribe())
+  }
+
   return (
     <div className="App">
-      <Navbar />
+      <Navbar logoutSubscriptions={logoutSubscriptions}/>
       <Switch>
         <Route exact path='/signin'>
             <SignInContainer />

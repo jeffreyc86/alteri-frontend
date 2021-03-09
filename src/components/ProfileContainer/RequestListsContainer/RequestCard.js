@@ -51,7 +51,7 @@ function RequestCard ({request}){
             status = 
                 <td>
                     <div className="req-match"> 
-                        <img src={process.env.PUBLIC_URL + "/images/accepted.png"} alt="fulfilled" className="request-status-img"/>
+                        <img src={process.env.PUBLIC_URL + "/images/fulfilled.png"} alt="fulfilled" className="request-status-img"/>
                         <span>Fulfilled</span>
                     </div>
                 </td>

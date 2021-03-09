@@ -4,7 +4,7 @@ import { useSelector } from "react-redux"
 import MenuNav from "./MenuNav"
 import MessagesNav from "./MessagesNav"
 
-function Navbar () {
+function Navbar ({logoutSubscriptions}) {
 
     const history = useHistory()
     const currentUser = useSelector(state => state.user.currentUser)
@@ -28,7 +28,7 @@ function Navbar () {
     return (
         <div className="navbar">
             <div className="navbar-left">
-                <MenuNav showMenu={showMenu} setShowMenu={setShowMenu}/>
+                <MenuNav showMenu={showMenu} setShowMenu={setShowMenu} logoutSubscriptions={logoutSubscriptions}/>
                 {currentUser ? <MessagesNav showList={showList} setShowList={setShowList}/> : null}
             </div>
             <div className="navbar-right">

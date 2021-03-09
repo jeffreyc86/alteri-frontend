@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import { updateUserDonations, updateUserRequests} from "../../features/requestsSlice"
+import MapContainer from './MapContainer'
 
 function ChatBanner () {
 
@@ -100,8 +101,8 @@ function ChatBanner () {
                 <div className="cb-dropdown">
                     <button onClick={()=>setShowMap(show=>!show)} className="map-dropbtn">Map</button>
                     {showMap ?
-                        <div className="cb-dropdown-content">
-                             <div>item</div>
+                        <div className="cb-dropdown-content" id="map">
+                            <MapContainer request={request}/>
                         </div> : null
                     }
                 </div>

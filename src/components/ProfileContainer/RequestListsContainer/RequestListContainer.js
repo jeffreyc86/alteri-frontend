@@ -7,7 +7,7 @@ function RequestsListContainer () {
     const requests = useSelector(state=>state.requests.userRequests)
     const donatedRequests = useSelector(state=>state.requests.userDonations)
 
-
+    
     const pendingRequests = requests.map(request => {
             return <RequestCard key={request.id} request={request} />
         })

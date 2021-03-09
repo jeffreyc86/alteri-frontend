@@ -6,7 +6,7 @@ import { logoutUserMessages } from "../features/messagesSlice"
 import { logoutUserRequests } from "../features/requestsSlice"
 import { logoutUserConversations } from "../features/conversationsSlice"
 
-function MenuNav ({showMenu, setShowMenu}) {
+function MenuNav ({showMenu, setShowMenu, logoutSubscriptions}) {
 
     const currentUser = useSelector(state => state.user.currentUser)
     const dispatch = useDispatch()
@@ -18,6 +18,7 @@ function MenuNav ({showMenu, setShowMenu}) {
         dispatch(logoutUserRequests())
         dispatch(logoutUserMessages())
         dispatch(logoutUserConversations())
+        logoutSubscriptions()
     }
 
     return(

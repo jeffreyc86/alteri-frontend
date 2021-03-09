@@ -998,7 +998,7 @@ code {
 }
 
 .pending-requests .request-card{
-  margin-bottom: 0;
+  margin-bottom: 10px;
 }
 
 .request-card h5{
@@ -1295,7 +1295,6 @@ code {
     margin: 0 .2vw;
   }
 
-
   .item-dd-info{
     margin: .2vw;
     overflow: hidden;
@@ -1315,6 +1314,23 @@ code {
     font-size: .7vw;
     font-weight: bold;
     color: #0492c2;
+  }
+
+  #map{
+    width: 40vw
+  }
+
+  .marker{
+    position: relative;
+    text-align: center;
+  }
+
+  .centered{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
   }
 
   @media screen and (max-width: 600px) {

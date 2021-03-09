@@ -26,7 +26,6 @@ const requestsSlice = createSlice({
         },
         updateUserDonations(state, action) {
             const newArray = [...state.userDonations].filter(req => req.id !== action.payload.id)
-            debugger
             state.userDonations = [...newArray, action.payload]
         },
         setUserDonations(state, action) {

@@ -5,7 +5,7 @@ import ChatBox from './ChatBox'
 import MessageForm from './MessageForm'
 
 function ChatArea () {
-
+    
     const convoId = useSelector(state=>state.conversations.convoId)
 
     return (
