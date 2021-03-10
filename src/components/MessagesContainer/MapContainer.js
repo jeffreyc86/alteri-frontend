@@ -5,7 +5,7 @@ import GoogleMapReact from 'google-map-react';
 const Marker = () => {
   return (
     <div className="marker">
-      <img width="20vw" src={process.env.PUBLIC_URL + '/images/marker.png'}/>;
+      <img width="20vw" src={process.env.PUBLIC_URL + '/images/marker.png'} alt="marker"/>;
       <div className="centered">Your Location</div>
     </div>
   )

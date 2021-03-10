@@ -19,22 +19,28 @@ function PendingRequestContainer () {
     },[pendingRequests, currentUser])
 
 
-    const pendingReqCards = openRequests.map(request => {
+    let usersPendingRequests = []
+
+    openRequests.forEach(request => {
 
         let distance = "Unavailable"
 
         if (currentLocation && request.recipient_loc.lat) {
-            distance = Math.round(
+            distance = (
                 convertDistance(getDistance(
                     { latitude: currentLocation.lat, longitude: currentLocation.lng },
                     { latitude: request.recipient_loc.lat, longitude: request.recipient_loc.lng }
-                    ), 'mi') * 100).toFixed(1)
+                    ), 'mi')).toFixed(1)
                 }
                 
         if (distance === "unavailable" || distance <= distFilter) {
-            return <PendingRequestCard key={request.id} request={request} />
+            usersPendingRequests.push(request)
         }
     })
+
+    const pendingReqCards = usersPendingRequests.map(request => {
+            return  <PendingRequestCard key={request.id} request={request} />
+        })
 
     // debugger
     return (
@@ -43,7 +49,7 @@ function PendingRequestContainer () {
             <div className="distance-filter">
                 <label htmlFor="distance filter">Filter by Distance Within</label>
                     <select value={distFilter} onChange={e=>setDistFilter(parseInt(e.target.value))}>
-                        <option value="10000000000" selected>Any</option>
+                        <option value="10000000000">Any</option>
                         <option value="5">5 miles</option>
                         <option value="10">10 miles</option>
                         <option value="20">20 miles</option>

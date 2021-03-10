@@ -33,7 +33,7 @@ function ConversationCard({conversation}){
                 setNewMessage(false)
             }
         }
-    }, [convoMembership, convoMessages])
+    }, [convoMembership, convoMessages, currentUser.id])
 
     let reqMatch
 
