@@ -53,6 +53,7 @@ function GoogleSignUp () {
                 onSuccess={responseGoogle}
                 onFailure={failedResponse}
                 cookiePolicy={'single_host_origin'}
+                className="google-button"
             />
         </div>
     )

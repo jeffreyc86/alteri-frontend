@@ -100,10 +100,10 @@ function ChatBanner () {
                 </div>
                 <div className="cb-dropdown">
                     <button onClick={()=>setShowMap(show=>!show)} className="map-dropbtn">Map</button>
-                    {showMap ?
+                    {showMap &&
                         <div className="cb-dropdown-content" id="map">
                             <MapContainer request={request}/>
-                        </div> : null
+                        </div>
                     }
                 </div>
             </div>

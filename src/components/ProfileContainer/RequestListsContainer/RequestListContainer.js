@@ -23,21 +23,26 @@ function RequestsListContainer () {
                 <h3>You haven't made or accepted any requests yet</h3> 
                 <p>Please visit our requests page to help someone in need or create a request.</p>
             </div>
-            :
+            : null}
             <div className="request-info">
-                <h1>Requests</h1>
-                <table className="request-info-table">
-                    <tbody>
-                        <tr>
-                            <th>Request Number</th>
-                            <th>Date Created</th>
-                            <th>Donor</th>
-                            <th>Status</th>
-                        </tr>
-                    </tbody>
-                </table>
+                {requests.length > 0 &&
+                <div>
+                    <h1>Requests</h1>
+                    <table className="request-info-table">
+                        <tbody>
+                            <tr>
+                                <th>Request Number</th>
+                                <th>Date Created</th>
+                                <th>Donor</th>
+                                <th>Status</th>
+                            </tr>
+                        </tbody>
+                    </table>
                     {pendingRequests}
-                <h1>Donations</h1>
+                </div> }
+                {donatedRequests.length > 0 &&
+                <div>
+                    <h1>Donations</h1>
                     <table className="request-info-table">
                         <tbody>
                             <tr>
@@ -49,8 +54,9 @@ function RequestsListContainer () {
                         </tbody>
                     </table>
                     {donationRequests}
+                </div>}
             </div>
-            }
+    
 
         </div>
     )

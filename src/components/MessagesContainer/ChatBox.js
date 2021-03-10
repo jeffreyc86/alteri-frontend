@@ -15,11 +15,18 @@ function ChatBox() {
       }, [userConvoMessages, convoId])
 
     let convoMessages
+    let messageCards
         if (userConvoMessages.length > 0) {
             convoMessages = userConvoMessages.filter(message => message.conversation_id === convoId)
+            
+            if (convoMessages.length === 0){
+                messageCards = (
+                <div className="default-message">
+                    <p>Send the first message</p>
+                </div>)
+            }
         }
     
-    let messageCards
         if (convoMessages && convoMessages.length > 0) {
             messageCards = convoMessages.map(message=>{
                 return <ChatMessageCard key={message.id} message={message} />
@@ -29,7 +36,6 @@ function ChatBox() {
 
     return (
         <div className="chat-box">
-            ChatBox
             {messageCards}
         </div>
     )

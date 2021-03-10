@@ -17,7 +17,9 @@ function ConversationList () {
 
     return(
         <div className="convo-list">
-            Conversations
+            <div className="convo-list-label">
+                Conversation List
+            </div>
             {convoCards}
         </div>
     )

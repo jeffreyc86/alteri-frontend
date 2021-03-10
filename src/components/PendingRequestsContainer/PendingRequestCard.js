@@ -1,4 +1,5 @@
 import React from 'react'
+import {useHistory} from 'react-router-dom'
 import {useSelector, useDispatch} from "react-redux"
 import {acceptRequest} from "../../features/requestsSlice"
 import {addMembership} from "../../features/userSlice"
@@ -11,16 +12,17 @@ function PendingRequestCard({request}) {
     const currentLocation = useSelector(state=>state.user.currentLocation)
     const currentUser = useSelector(state=>state.user.currentUser)
     const dispatch = useDispatch()
+    const history = useHistory()
 
     let distanceFrom = "Unavailable"
 
         if (currentLocation && request.recipient_loc.lat) {
-            const distance = Math.round(
+            const distance = (
                 convertDistance(getDistance(
                     { latitude: currentLocation.lat, longitude: currentLocation.lng },
                     { latitude: request.recipient_loc.lat, longitude: request.recipient_loc.lng }
-                ), 'mi') * 100).toFixed(1)
-            
+                ), 'mi')).toFixed(1)
+                debugger
             distanceFrom = `${distance} mi`
         }
 
@@ -49,6 +51,8 @@ function PendingRequestCard({request}) {
                 dispatch(addConvo(data.conversation))
                 dispatch(addMembership(data.membership))
             })
+
+            history.push('/messages')
         
     }
 

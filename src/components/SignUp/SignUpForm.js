@@ -119,9 +119,11 @@ function SignUpForm () {
                     <br/>
                     <input 
                         type="file" 
-                        name="image" 
+                        name="image"
+                        className="file-input"
                         onChange={(e)=>setImage(e.target.files[0])} 
                         accept="image/*" 
+                        style={{marginTop: ".5vh"}}
                     />
                 </div>
                 <br/>

@@ -9,7 +9,11 @@ function ChatContainer () {
 
     return (
         <div className="chat-container">
-            {convoId === 0 ? <p>Select a Conversation on the left</p> : <ChatArea />}
+            {convoId === 0 ? 
+                <div className="default-chat-container">
+                    <p>Select a Conversation on the left</p> 
+                </div>
+                : <ChatArea />}
         </div>
     )
 }

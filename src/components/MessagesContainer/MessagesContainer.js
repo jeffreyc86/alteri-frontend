@@ -7,7 +7,7 @@ function MessagesContainer () {
 
     return (
         <div className="messages-container">
-            <h1>Messages</h1>
+             <img className="messages-banner" src={process.env.PUBLIC_URL + "/images/messages-banner.jpg"} alt="messages banner" />
             <div className="messages-area">
                 <ConversationList />
                 <ChatContainer />

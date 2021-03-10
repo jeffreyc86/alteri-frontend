@@ -8,6 +8,7 @@ import { fetchUserConvos, addConvo } from "../features/conversationsSlice"
 import consumer from './cable'
 
 import Navbar from "./Navbar"
+import Home from './Home'
 import SignInContainer from "./Login/SignInContainer"
 import SignUpContainer from './SignUp/SignUpContainer';
 import ProfileContainer from './ProfileContainer/ProfileContainer'
@@ -198,6 +199,9 @@ function App() {
     <div className="App">
       <Navbar logoutSubscriptions={logoutSubscriptions}/>
       <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
         <Route exact path='/signin'>
             <SignInContainer />
         </Route>

@@ -28,14 +28,15 @@ function PendingRequestContainer () {
                 convertDistance(getDistance(
                     { latitude: currentLocation.lat, longitude: currentLocation.lng },
                     { latitude: request.recipient_loc.lat, longitude: request.recipient_loc.lng }
-                ), 'mi') * 100).toFixed(1)
-        }
-
+                    ), 'mi') * 100).toFixed(1)
+                }
+                
         if (distance === "unavailable" || distance <= distFilter) {
             return <PendingRequestCard key={request.id} request={request} />
         }
     })
 
+    // debugger
     return (
         <div className="pending-req-container">
             <img className="pending-req-banner" src={process.env.PUBLIC_URL + "/images/pendingreq-banner.jpg"} alt="pending req banner" />
@@ -49,7 +50,7 @@ function PendingRequestContainer () {
                         <option value="30">30 miles</option>
                     </select>
             </div>
-            {pendingReqCards.length > 0 ? 
+            {pendingReqCards.length >= 1 ? 
                 <div className="pending-requests">
                     <table className="request-info-table">
                         <tbody>
@@ -63,7 +64,9 @@ function PendingRequestContainer () {
                     </table>
                     {pendingReqCards}
                 </div> :
-                <h1>There are currently no open requests</h1>}
+                <div className="no-reqs">
+                    <h1>There are currently no open requests.<br/>Please check again later.</h1>
+                </div>}
         </div>
     )
 }
