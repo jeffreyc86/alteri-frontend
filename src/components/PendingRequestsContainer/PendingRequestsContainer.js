@@ -42,7 +42,7 @@ function PendingRequestContainer () {
             return  <PendingRequestCard key={request.id} request={request} />
         })
 
-    // debugger
+    debugger
     return (
         <div className="pending-req-container">
             <img className="pending-req-banner" src={process.env.PUBLIC_URL + "/images/pendingreq-banner.jpg"} alt="pending req banner" />
