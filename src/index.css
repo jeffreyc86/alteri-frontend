@@ -1553,7 +1553,7 @@ input::-webkit-file-upload-button:hover{
 .emoji-picker{
     position: absolute;
     right: 9.5vw;
-    top: 40vh;
+    bottom: 0;
 }
 
 #emoji-btn{
@@ -1569,6 +1569,12 @@ input::-webkit-file-upload-button:hover{
 @media screen and (max-width: 600px) {
   .message-form input{
     width: 40vw;
+  }
+
+  .emoji-picker{
+    position: absolute;
+    right: 9.5vw;
+    top: 40vh;
   }
 }
 
