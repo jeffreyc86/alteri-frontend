@@ -19,7 +19,7 @@ function PendingRequestContainer () {
     },[pendingRequests, currentUser])
 
 
-    let usersPendingRequests = []
+    let openPendingRequests = []
 
     openRequests.forEach(request => {
 
@@ -34,11 +34,11 @@ function PendingRequestContainer () {
                 }
                 
         if (distance === "unavailable" || distance <= distFilter) {
-            usersPendingRequests.push(request)
+            openPendingRequests.push(request)
         }
     })
 
-    const pendingReqCards = usersPendingRequests.map(request => {
+    const pendingReqCards = openPendingRequests.map(request => {
             return  <PendingRequestCard key={request.id} request={request} />
         })
 
@@ -56,7 +56,7 @@ function PendingRequestContainer () {
                         <option value="30">30 miles</option>
                     </select>
             </div>
-            {pendingReqCards.length >= 1 ? 
+            {pendingReqCards.length > 0 ? 
                 <div className="pending-requests">
                     <table className="request-info-table">
                         <tbody>

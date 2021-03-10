@@ -8,7 +8,7 @@ function SignInContainer () {
         <div className="signin-container">
 
             <GoogleSignIn />
-            <div class="divider-line-x"><span>or</span></div>
+            <div className="divider-line-x"><span>or</span></div>
             <SignInForm />
 
         </div>
