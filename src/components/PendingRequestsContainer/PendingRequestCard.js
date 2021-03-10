@@ -22,7 +22,6 @@ function PendingRequestCard({request}) {
                     { latitude: currentLocation.lat, longitude: currentLocation.lng },
                     { latitude: request.recipient_loc.lat, longitude: request.recipient_loc.lng }
                 ), 'mi')).toFixed(1)
-                debugger
             distanceFrom = `${distance} mi`
         }
 
