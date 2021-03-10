@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import PendingRequestCard from "./PendingRequestCard"
 import { getDistance, convertDistance } from 'geolib'
 import { useSelector} from "react-redux"
@@ -6,23 +6,15 @@ import { useSelector} from "react-redux"
 
 function PendingRequestContainer () {
 
-    const [openRequests, setOpenRequests] = useState([])
     const [distFilter, setDistFilter] = useState(100000000)
     
     const currentLocation = useSelector(state=>state.user.currentLocation)
     const currentUser = useSelector(state=>state.user.currentUser)
     const pendingRequests = useSelector(state=>state.requests.allPendingRequests)
 
-    useEffect(()=>{
-        if (currentUser)
-        setOpenRequests([...pendingRequests].filter(req => req.recipient_id !== currentUser.id))
-    },[pendingRequests, currentUser])
+    const openRequests = [...pendingRequests].filter(req => req.recipient_id !== currentUser.id)
 
-
-    let openPendingRequests = []
-
-    openRequests.forEach(request => {
-
+    const checkIfWithinDistance = (request) => {
         let distance = "Unavailable"
 
         if (currentLocation && request.recipient_loc.lat) {
@@ -31,18 +23,22 @@ function PendingRequestContainer () {
                     { latitude: currentLocation.lat, longitude: currentLocation.lng },
                     { latitude: request.recipient_loc.lat, longitude: request.recipient_loc.lng }
                     ), 'mi')).toFixed(1)
-                }
-                
-        if (distance === "unavailable" || distance <= distFilter) {
-            openPendingRequests.push(request)
         }
-    })
+
+        if (distance === "unavailable" || parseFloat(distance) <= distFilter) {
+           return true
+        } else {
+           return false
+        }
+    } 
+
+    const openPendingRequests = openRequests.filter(request => checkIfWithinDistance(request))
 
     const pendingReqCards = openPendingRequests.map(request => {
             return  <PendingRequestCard key={request.id} request={request} />
         })
 
-    debugger
+    // debugger
     return (
         <div className="pending-req-container">
             <img className="pending-req-banner" src={process.env.PUBLIC_URL + "/images/pendingreq-banner.jpg"} alt="pending req banner" />
@@ -56,6 +52,7 @@ function PendingRequestContainer () {
                         <option value="30">30 miles</option>
                     </select>
             </div>
+            {pendingReqCards.length > 0 ?
                 <div className="pending-requests">
                     <table className="request-info-table">
                         <tbody>
@@ -69,7 +66,7 @@ function PendingRequestContainer () {
                     </table>
                     {pendingReqCards}
                 </div> 
-                {pendingReqCards.length > 0 &&
+                :
                 <div className="no-reqs">
                     <h1>There are currently no open requests.<br/>Please check again later.</h1>
                 </div>}

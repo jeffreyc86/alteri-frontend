@@ -39,8 +39,8 @@ function MenuNav ({showMenu, setShowMenu, logoutSubscriptions}) {
                             <NavLink to="/" exact onClick={handleLogOut}>Logout</NavLink>
                         </>
                         : <>
-                            <NavLink to="/signup" exact>Sign Up</NavLink>
                             <NavLink to="/signin" exact>Sign In</NavLink>
+                            <NavLink to="/signup" exact>Sign Up</NavLink>
                         </>
                     }
                 </div> 

@@ -15,7 +15,10 @@ function ChatBanner () {
     const userRequests = useSelector(state=>state.requests.userRequests)
     const userDonations = useSelector(state=>state.requests.userDonations)
 
-    const requestId = userConvos.find(convo => convo.id === convoId).request_id
+    let requestId
+    if (userConvos.length > 0){
+        requestId = userConvos.find(convo => convo.id === convoId).request_id
+    }
 
     const request = [...userRequests, ...userDonations].find(req => req.id === requestId)
 
