@@ -56,7 +56,6 @@ function PendingRequestContainer () {
                         <option value="30">30 miles</option>
                     </select>
             </div>
-            {pendingReqCards.length > 0 ? 
                 <div className="pending-requests">
                     <table className="request-info-table">
                         <tbody>
@@ -69,7 +68,8 @@ function PendingRequestContainer () {
                         </tbody>
                     </table>
                     {pendingReqCards}
-                </div> :
+                </div> 
+                {pendingReqCards.length > 0 &&
                 <div className="no-reqs">
                     <h1>There are currently no open requests.<br/>Please check again later.</h1>
                 </div>}
