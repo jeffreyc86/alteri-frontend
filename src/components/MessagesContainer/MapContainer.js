@@ -14,7 +14,7 @@ const Marker = () => {
 const OtherMarker = ({name}) => {
   return (
     <div className="marker">
-      <img width="20vw" src={process.env.PUBLIC_URL + '/images/marker2.png'}/>;
+      <img width="20vw" src={process.env.PUBLIC_URL + '/images/marker2.png'} alt="marker"/>;
       <div className="centered">{name}'s Location</div>
     </div>
   )

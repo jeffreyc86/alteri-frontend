@@ -146,6 +146,10 @@ function App() {
         disconnected: ()=>{console.log("pending requests DISconnected")}
       })
 
+      return () => {
+        subscription.unsubscribe()
+      }
+
   }, [dispatch])
 
   const [userReqSubs, setUserReqSubs] = useState([])
