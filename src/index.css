@@ -58,6 +58,7 @@ code {
   margin-top: 1px;
   margin-bottom: 1px;
   margin-right: 5px;
+  cursor: pointer;
 }
 
 .navbar-left {
