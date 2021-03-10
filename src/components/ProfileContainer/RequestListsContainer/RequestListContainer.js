@@ -20,7 +20,7 @@ function RequestsListContainer () {
         <div className="requests-list">
             {requests.length === 0 && donatedRequests.length === 0 ? 
             <div className="request-info">
-                <h3>You haven't made or accepted any requests yet</h3> 
+                <h3>You haven't made or accepted any requests or donations</h3> 
                 <p>Please visit our requests page to help someone in need or create a request.</p>
             </div>
             : null}

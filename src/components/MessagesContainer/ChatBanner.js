@@ -17,7 +17,10 @@ function ChatBanner () {
 
     let requestId
     if (userConvos.length > 0){
-        requestId = userConvos.find(convo => convo.id === convoId).request_id
+        const currentConvo = userConvos.find(convo => convo.id === convoId)
+            if (currentConvo){
+                requestId = currentConvo.request_id
+            }
     }
 
     const request = [...userRequests, ...userDonations].find(req => req.id === requestId)

@@ -3,7 +3,7 @@ import {useHistory} from 'react-router-dom'
 import {useSelector, useDispatch} from "react-redux"
 import {acceptRequest} from "../../features/requestsSlice"
 import {addMembership} from "../../features/userSlice"
-import {addConvo} from "../../features/conversationsSlice"
+import {addConvo, setConvoId} from "../../features/conversationsSlice"
 import { getDistance, convertDistance } from 'geolib'
 import RequestedItemCard from "./RequestedItemCard"
 
@@ -49,9 +49,11 @@ function PendingRequestCard({request}) {
                 dispatch(acceptRequest(data.request))
                 dispatch(addConvo(data.conversation))
                 dispatch(addMembership(data.membership))
+                dispatch(setConvoId(data.conversation.id))
             })
 
             history.push('/messages')
+
         
     }
 
