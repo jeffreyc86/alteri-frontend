@@ -34,7 +34,7 @@ function App() {
           Authorization: `Bearer ${token}`,
         },
       })
-        .then((r) => r.json())
+        .then(res => res.json())
         .then((user) => {
           dispatch(setCurrentUser(user)); 
         });
