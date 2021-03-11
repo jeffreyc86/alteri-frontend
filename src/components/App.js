@@ -172,13 +172,17 @@ function App() {
           },{
             connected: ()=>{console.log(`request ${request.id} connected`)},
             received: data => {
-              const request = data[0]
-              const membership = data[1]
-              const conversation = data[2]
-              dispatch(updatePendingRequests(request))
-              dispatch(updateUserRequests(request))
-              dispatch(addMembership(membership))
-              dispatch(addConvo(conversation))
+              if (data.request){
+                dispatch(updateUserRequests(data.request))
+              } else {
+                const request = data[0]
+                const membership = data[1]
+                const conversation = data[2]
+                dispatch(updatePendingRequests(request))
+                dispatch(updateUserRequests(request))
+                dispatch(addMembership(membership))
+                dispatch(addConvo(conversation))
+              }
             },
             disconnected: ()=>{console.log(`request ${request.id} DISconnected`)},
           })
