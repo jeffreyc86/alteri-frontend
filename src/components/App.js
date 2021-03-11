@@ -160,7 +160,7 @@ function App() {
     })
 
     if (userRequests.length > 0) {
-      const usersPendingRequests = [...userRequests].filter(req=>req.accepted === false)
+      const usersPendingRequests = [...userRequests].filter(req=>req.fulfilled === false)
       
       if (usersPendingRequests.length > 0) {
         let newArr = []
@@ -172,6 +172,7 @@ function App() {
           },{
             connected: ()=>{console.log(`request ${request.id} connected`)},
             received: data => {
+              debugger
               if (data.request){
                 dispatch(updateUserRequests(data.request))
               } else {
