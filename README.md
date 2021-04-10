@@ -14,6 +14,6 @@ npm install && npm start
 ## Features
 
 1. Create requests for basic necessities
-2. View and complete pending requests in your area 
+2. View and accept pending requests in your area 
 3. Chat in real-time with respective donor/recipient for a specific request
 4. Mark a request as fulfilled
