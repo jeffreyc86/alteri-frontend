@@ -4,7 +4,7 @@ Front end for [Alteri](https://github.com/jeffreyc86/alteri-demo/), an app conne
 
 [Live Link](https://alteri-client.netlify.app/) / [Demo](https://www.loom.com/share/471914886e254936afc0976c14b0b3c2)
 
-[Front End](https://github.com/jeffreyc86/alteri-backend)
+[Back End](https://github.com/jeffreyc86/alteri-backend)
 
 To use, start api server and run:
 ```zsh
