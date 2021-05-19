@@ -396,6 +396,16 @@ input::-webkit-file-upload-button:hover{
   background: #fff;
 }
 
+.demo-signin{
+  cursor: pointer;
+  font-size: .8rem;
+  padding: .2rem
+}
+
+.demo-signin:hover{
+  color: #0492c2
+}
+
 @media screen and (max-width: 600px) {
   .sign-up-container{
     margin: 5vh auto;

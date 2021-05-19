@@ -45,6 +45,24 @@ function SignInForm () {
           });
       }
 
+      function demoSignIn() {
+        fetch(`${process.env.REACT_APP_RAILS_URL}login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({email: 'homelessguy2@email.com', password: 'test1234'}),
+        })
+          .then((r) => r.json())
+          .then((data) => {
+              const { user, token } = data;
+              const action = setCurrentUser(user);
+              dispatch(action);
+              localStorage.setItem("token", token);
+              history.push("/profile");
+          });
+      }
+
     return (
         <div className="signin-form-div">
             {errors.map((error, index)=>{
@@ -75,6 +93,7 @@ function SignInForm () {
                 <br/>
                 <button type="submit">Sign In</button>
             </form>
+            <div className="demo-signin" onClick={demoSignIn}>Demo Sign In</div>
         </div>
     )
 }
