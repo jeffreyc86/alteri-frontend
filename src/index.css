@@ -403,6 +403,7 @@ input::-webkit-file-upload-button:hover{
 }
 
 .demo-signin:hover{
+  font-weight: bold;
   color: #0492c2
 }
 
