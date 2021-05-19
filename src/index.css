@@ -397,13 +397,22 @@ input::-webkit-file-upload-button:hover{
 
 .demo-signin{
   cursor: pointer;
-  font-size: .8rem;
+  font-size: .9rem;
   padding: .2rem
+}
+
+.demo-message{
+  font-size: .5rem
 }
 
 .demo-signin:hover{
   font-weight: bold;
   color: #0492c2
+}
+
+.demo-signin:hover > .demo-message{
+  font-weight: normal;
+  color: #515151
 }
 
 @media screen and (max-width: 600px) {
