@@ -37,8 +37,7 @@ code {
 .navbar{
   background-color: white;
   height: 3vw;
-  padding-top: .2vw;
-  padding-bottom: .2vw;
+  padding: 2px 3px;
 }
 
 .navbar a{
