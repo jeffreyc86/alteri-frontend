@@ -72,13 +72,10 @@ code {
 
 .dropbtn{
   height: 2.6vw;
-  padding-left: .5vw; 
-  padding-right: .5vw;
-  margin-top: .2vw;
-  margin-bottom: .2vw;
+  padding: .2vw .36vw; 
+  margin: .2vw auto;
   border: .25px solid #c0c0c0;
   border-radius: 3px;
-  vertical-align: middle;
 }
 
 .dropbtn:hover {
@@ -87,10 +84,8 @@ code {
 
 .mess-drop-btn{
   height: 2.6vw;
-  padding-left: .5vw; 
-  padding-right: .5vw;
-  margin-top: .2vw;
-  margin-bottom: .2vw;
+  padding: .2vw .36vw; 
+  margin: .2vw auto;
   border: .25px solid #c0c0c0;
   border-radius: 3px;
 }
