@@ -5,12 +5,22 @@ import { logoutUser } from "../features/userSlice"
 import { logoutUserMessages } from "../features/messagesSlice"
 import { logoutUserRequests } from "../features/requestsSlice"
 import { logoutUserConversations } from "../features/conversationsSlice"
+import useSubscriptions from "../features/useSubscriptions"
 
-function MenuNav ({showMenu, setShowMenu, logoutSubscriptions}) {
+function MenuNav ({showMenu, setShowMenu }) {
 
     const currentUser = useSelector(state => state.user.currentUser)
     const dispatch = useDispatch()
 
+    const ws = useSubscriptions()
+
+    // unsubscribe to the connections
+    function logoutSubscriptions() {
+        // userReqSubs.forEach((sub) => sub.unsubscribe());
+        // convoSubs.forEach((sub) => sub.unsubscribe());
+        console.log("logout");
+        ws.disconnectUserReqSubs();
+    }
 
     function handleLogOut() {
         localStorage.removeItem("token")

@@ -17,11 +17,6 @@ import {
 } from "../features/requestsSlice";
 import { addMessage, fetchAllMessages } from "../features/messagesSlice";
 import { fetchUserConvos, addConvo } from "../features/conversationsSlice";
-import {
-  setPendingReqSub,
-  setUserReqSubs,
-  setUserConvoSubs,
-} from "../features/subscriptionsSlice";
 import { consumer, createConnection } from "./cable";
 import useSubscriptions from "../features/useSubscriptions";
 
@@ -126,18 +121,26 @@ function App() {
     }
   }, [currentUser]);
 
-  // REDUX state.subscriptions
-  const userReqSubs = useSelector((state) => state.subscriptions.userReqSubs);
-  const userConvoSubs = useSelector(
-    (state) => state.subscriptions.userConvoSubs
-  );
-
-  // create the consumer connection
+  // Create the Consumer connection
   useEffect(() => {
     if (currentUser) {
       ws.createWebSocket();
     }
   }, [currentUser]);
+
+  // Manage userReqSubs Websockets
+  useEffect(() => {
+    if (currentUser && userRequests.length > 0) {
+      // dispatch to get user
+      const usersPendingRequests = userRequests.filter(
+        (req) => req.fulfilled === false
+      );
+      ws.createUserReqSubs(usersPendingRequests);
+    }
+
+    // UnMount
+    return () => ws.disconnectUserReqSubs();
+  }, [currentUser, userRequests]);
 
   // create subscriptions for user requests
   // useEffect(() => {
@@ -183,10 +186,10 @@ function App() {
   //           connectionMap[request.id] = subscription;
   //         }
   //       });
-  //       dispatch(setUserReqSubs(connectionMap));
+  //       // dispatch(setUserReqSubs(connectionMap));
   //     }
   //   }
-  // }, [userRequests, dispatch]);
+  // }, [userRequests]);
 
   // create subscriptions for user convos
   // useEffect(() => {
@@ -220,15 +223,9 @@ function App() {
   //   }
   // }, [userConvos]);
 
-  function logoutSubscriptions() {
-    // unsubscribe to the connections
-    // userReqSubs.forEach((sub) => sub.unsubscribe());
-    // convoSubs.forEach((sub) => sub.unsubscribe());
-  }
-
   return (
     <div className="App">
-      <Navbar logoutSubscriptions={logoutSubscriptions} />
+      <Navbar />
       <ReduxToastr
         timeOut={500000}
         removeOnHoverTimeOut={10000}

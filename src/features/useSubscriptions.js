@@ -1,13 +1,13 @@
-import React, {useDebugValue} from "react";
+import React, { useDebugValue } from "react";
 import { createConsumer } from "@rails/actioncable";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setConsumer,
-  setPendingReqSub,
-  setUserReqSubs,
-  setUserConvoSubs,
-} from "./subscriptionsSlice";
-import { addPendingRequest } from "../features/requestsSlice";
+  updatePendingRequests,
+  updateUserRequests,
+  addPendingRequest,
+} from "../features/requestsSlice";
+import { addMembership } from "../features/userSlice";
+import { addConvo } from "../features/conversationsSlice";
 
 var WS_CONNECTION = {
   consumer: null,
@@ -37,12 +37,12 @@ const useSubscription = () => {
           channel: "PendingRequestsChannel",
         },
         {
-          connected: () => {
-          },
+          connected: () => {console.log("pr connected")},
           received: (request) => {
             dispatch(addPendingRequest(request));
           },
           disconnected: () => {
+            console.log("pr disconnected");
           },
         }
       );
@@ -51,22 +51,81 @@ const useSubscription = () => {
 
   const disconnectPendingSub = () => {
     if (WS_CONNECTION.pendingReqSub) {
-      WS_CONNECTION.pendingReqSub.unsubscribe();
+      WS_CONNECTION.pendingReqSub.disconnected();
       WS_CONNECTION.pendingReqSub = null;
     }
   };
 
-  const createUserReqSub = () => {};
-  const createUserConvoSub = () => {};
+  // create new user sub
+  const createUserReqSubs = (usersPendingRequests = []) => {
+    if (usersPendingRequests.length > 0) {
+      usersPendingRequests.forEach((request) => {
+        // debugger
+        if (!WS_CONNECTION.userReqSubs[request.id]) {
+          WS_CONNECTION.userReqSubs[request.id] =
+            WS_CONNECTION.consumer.subscriptions.create(
+              {
+                channel: "RequestChannel",
+                id: request.id,
+              },
+              {
+                connected: () => {
+                  console.log(`request ${request.id} connected`);
+                },
+                received: (data) => {
+                  if (data.request) {
+                    dispatch(updateUserRequests(data.request));
+                  } else {
+                    const request = data[0];
+                    const membership = data[1];
+                    const conversation = data[2];
+                    dispatch(updatePendingRequests(request));
+                    dispatch(updateUserRequests(request));
+                    dispatch(addMembership(membership));
+                    dispatch(addConvo(conversation));
+                  }
+                },
+                disconnected: () => {
+                  debugger;
+                  console.log(`request ${request.id} DISconnected`);
+                },
+              }
+            );
+        }
+      });
+    }
+  };
 
-  useDebugValue(WS_CONNECTION)
+  const disconnectUserReqSubs = (id = "") => {
+    const discUserReqSub = (reqId) => {
+      if (WS_CONNECTION.userReqSubs[reqId]) {
+        WS_CONNECTION.userReqSubs[reqId].disconnected();
+        delete WS_CONNECTION.userReqSubs[reqId];
+      }
+    };
+
+    // Single Case
+    if (id) {
+      discUserReqSub(id);
+    } else {
+      // Multi Case
+      Object.keys(WS_CONNECTION.userReqSubs).forEach((reqId) =>
+        discUserReqSub(reqId)
+      );
+    }
+  };
+
+  useDebugValue(WS_CONNECTION);
 
   return {
     subscriptions: WS_CONNECTION,
     createWebSocket,
+    // PendingSub
     createPendingSub,
     disconnectPendingSub,
-    createUserReqSub,
+    // UserReqSubs
+    createUserReqSubs,
+    disconnectUserReqSubs,
   };
 };
 

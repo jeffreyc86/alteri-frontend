@@ -14,7 +14,7 @@ function PendingRequestContainer() {
   const pendingRequests = useSelector(
     (state) => state.requests.allPendingRequests
   );
-
+ 
   const openRequests = pendingRequests.filter(
     (req) => req.recipient_id !== currentUser.id
   );
