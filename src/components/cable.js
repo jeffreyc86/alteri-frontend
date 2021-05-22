@@ -1,9 +1,14 @@
 import {createConsumer} from "@rails/actioncable"
 
-const token = localStorage.getItem("token")
 
 
-const consumer = createConsumer(`${process.env.REACT_APP_WS_URL}?token=${token}`)
+let consumer = null
+
+const createConnection = () => {
+    const token = localStorage.getItem("token");
+    consumer = createConsumer(`${process.env.REACT_APP_WS_URL}?token=${token}`);
+}
+// const consumer = createConsumer(`${process.env.REACT_APP_WS_URL}?token=${token}`)
 
 
-export default consumer
+export {consumer, createConnection}

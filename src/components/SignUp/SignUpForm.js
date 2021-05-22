@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../features/userSlice"
+import { toastr } from "react-redux-toastr";
 
 function SignUpForm () {
 
@@ -22,7 +23,8 @@ function SignUpForm () {
         e.preventDefault()
 
         if (password !== confirmedPassword) {
-            alert("Passwords do not match. Please enter and re-enter a password")
+            toastr.warning("Passwords do not match", "Please enter and re-enter a password")
+            // alert("Passwords do not match. Please enter and re-enter a password")
             setPassword("")
             setConfirmedPassword("")
         } else {
