@@ -67,77 +67,81 @@ function SignUpForm () {
 
 
     return (
-        <div className="sign-up-form-div">
-            {errors.map((error, index)=>{
-                return <p key={index} className="errors">{error}</p>
-            })}
-            <form className="signup-form" onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="email">Email</label>
-                    <input 
-                        type="text" 
-                        value={email} 
-                        onChange={(e) => setEmail(e.target.value)} 
-                        required 
-                    />
-                </div>
-                <br/>
-                <div>
-                    <label htmlFor="password">Password</label>
-                    <input 
-                        type="password" 
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)} 
-                        required 
-                    />
-                </div>
-                <br/>
-                <div>
-                    <label htmlFor="password">Re-Enter Password</label>
-                    <input 
-                        type="password" 
-                        value={confirmedPassword} 
-                        onChange={(e) => setConfirmedPassword(e.target.value)} 
-                    />
-                </div>
-                <br/>
-                <div>
-                    <label htmlFor="first name">First Name</label>
-                    <input 
-                        type="text" 
-                        value={firstName} 
-                        onChange={(e) => setFirstName(e.target.value)} 
-                        required 
-                    />
-                </div>
-                <br/>
-                <div>
-                    <label htmlFor="last name">Last Name</label>
-                    <input 
-                        type="text" 
-                        value={lastName} 
-                        onChange={(e) => setLastName(e.target.value)} 
-                        required 
-                    />
-                </div>
-                <br/>
-                <div>
-                    <label htmlFor="profile photo">Profile Photo</label>
-                    <br/>
-                    <input 
-                        type="file" 
-                        name="image"
-                        className="file-input"
-                        onChange={(e)=>setImage(e.target.files[0])} 
-                        accept="image/*" 
-                        style={{marginTop: ".5vh"}}
-                    />
-                </div>
-                <br/>
-                <button type="submit">Create Account</button>
-            </form>
-        </div>
-    )
+      <div className="sign-up-form-div">
+        {errors.map((error, index) => {
+          return (
+            <p key={index} className="errors">
+              {error}
+            </p>
+          );
+        })}
+        <form className="signup-form" onSubmit={handleSubmit}>
+          <div className="signin-input-div">
+            <label htmlFor="email">Email</label>
+            <input
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <br />
+          <div className="signin-input-div">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <br />
+          <div className="signin-input-div">
+            <label htmlFor="password">Re-Enter Password</label>
+            <input
+              type="password"
+              value={confirmedPassword}
+              onChange={(e) => setConfirmedPassword(e.target.value)}
+            />
+          </div>
+          <br />
+          <div className="signin-input-div">
+            <label htmlFor="first name">First Name</label>
+            <input
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+            />
+          </div>
+          <br />
+          <div className="signin-input-div">
+            <label htmlFor="last name">Last Name</label>
+            <input
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              required
+            />
+          </div>
+          <br />
+          <div>
+            <label htmlFor="profile photo">Profile Photo</label>
+            <br />
+            <input
+              type="file"
+              name="image"
+              className="file-input"
+              onChange={(e) => setImage(e.target.files[0])}
+              accept="image/*"
+              style={{ marginTop: ".5vh" }}
+            />
+          </div>
+          <br />
+          <button type="submit">Create Account</button>
+        </form>
+      </div>
+    );
 }
 
 export default SignUpForm

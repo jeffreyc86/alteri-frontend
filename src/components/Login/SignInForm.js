@@ -66,46 +66,52 @@ function SignInForm () {
       }
 
     return (
-        <div className="signin-form-div">
-            {errors.map((error, index)=>{
-                return <p key={index} className="errors">{error}</p>
-            })}
-            <form className="signin-form" onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="email">Email</label>
-                    <input
-                    type="text"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    />
-                </div>
-                <br/>
-                <div>
-                    <label htmlFor="password">Password</label>
-                    <input
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                    />
-                </div>
-                <br/>
-                <button type="submit">Sign In</button>
-            </form>
-            <div className="demo-signin" onClick={demoSignIn}>
-              Demo Sign In
-              {demoClicked && 
-                <>
-                  <br/>
-                  <span className="demo-message">It may take a few seconds for the back end to fire up</span>
-                </>
-              }
-            </div>
+      <div className="signin-form-div">
+        {errors.map((error, index) => {
+          return (
+            <p key={index} className="errors">
+              {error}
+            </p>
+          );
+        })}
+        <form className="signin-form" onSubmit={handleSubmit}>
+          <div className="signin-input-div">
+            <label htmlFor="email">Email</label>
+            <input
+              type="text"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <br />
+          <div className="signin-input-div">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <br />
+          <button type="submit">Sign In</button>
+        </form>
+        <div className="demo-signin" onClick={demoSignIn}>
+          Demo Sign In
+          {demoClicked && (
+            <>
+              <br />
+              <span className="demo-message">
+                It may take a few seconds for the back end to fire up
+              </span>
+            </>
+          )}
         </div>
-    )
+      </div>
+    );
 }
 
 export default SignInForm
