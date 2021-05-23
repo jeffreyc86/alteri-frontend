@@ -51,7 +51,7 @@ function PendingRequestContainer() {
       ).toFixed(1);
     }
 
-    if (distance === "unavailable" || parseFloat(distance) <= distFilter) {
+    if (distance === "Unavailable" || parseFloat(distance) <= distFilter) {
       return true;
     } else {
       return false;

@@ -24,7 +24,6 @@ const userSlice = createSlice({
         },
         logoutUser(state){
             state.currentUser = null
-            state.currentLocation = null
             state.memberships = []
         }
     }

@@ -2,6 +2,8 @@ import React, { useCallback, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ReduxToastr from "react-redux-toastr";
+import { toastr } from "react-redux-toastr";
+import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 import {
   setCurrentUser,
   setCurrentLocation,
@@ -51,45 +53,49 @@ function App() {
     }
   }, []);
 
-  const getCurrentLocation = useCallback(() => {
-    navigator.permissions
-      .query({ name: "geolocation" })
-      .then(function (result) {
-        if (result.state === "granted") {
-          navigator.geolocation.getCurrentPosition((position) => {
-            const pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            };
-            const action = setCurrentLocation(pos);
-            dispatch(action);
-          });
-        } else if (result.state === "prompt") {
-          getCurrentLocation();
-        } else if (result.state === "denied") {
-          alert(
-            "Your location is required to use this app. You may always change the permissions within your internet settings."
-          );
-        }
-      });
-  }, []);
+  const getCurrentLocation = () => {
+    navigator.geolocation.getCurrentPosition(
+      // success
+      (position) => {
+        const pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+        dispatch(setCurrentLocation(pos));
+      },
+      // error 
+      () => {
+        toastr.light(
+          "Your location is required to use this app",
+          "You may always change the permissions within your internet settings",
+          { icon: "info", status: "info" }
+        );
+      }
+    )
+  };
 
   useEffect(() => {
     getCurrentLocation();
-  }, [getCurrentLocation, currentUser]);
+  }, 
+  // eslint-disable-next-line
+  []);
 
-  useEffect(() => {
-    if (currentUser) {
-      fetch(
-        `${process.env.REACT_APP_RAILS_URL}updatelocation/${currentUser.id}`,
-        {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(currentLocation),
-        }
-      );
-    }
-  }, [currentUser, currentLocation]);
+  useEffect(
+    () => {
+      if (currentUser) {
+        fetch(
+          `${process.env.REACT_APP_RAILS_URL}updatelocation/${currentUser.id}`,
+          {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(currentLocation),
+          }
+        );
+      }
+    },
+    // eslint-disable-next-line
+    [currentLocation, currentUser]
+  );
 
   useEffect(
     () => {
@@ -175,14 +181,13 @@ function App() {
       [currentUser, userConvos]
     );
 
-
   return (
     <div className="App">
       <Navbar />
       <ReduxToastr
-        timeOut={500000}
-        removeOnHoverTimeOut={10000}
-        preventDuplicates
+        timeOut={50000}
+        removeOnHoverTimeOut={50000}
+        preventDuplicates={true}
         progressBar
         closeOnToastrClick
       />
