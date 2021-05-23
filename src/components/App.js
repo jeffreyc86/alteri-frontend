@@ -146,6 +146,22 @@ function App() {
     [currentUser]
   );
 
+  // currentUser is authed, create pending request subscription
+  useEffect(
+    () => {
+      if (currentUser) {
+        ws.createPendingSub();
+      }
+
+      // Componet Unmounts
+      return () => {
+        ws.disconnectPendingSub();
+      };
+    },
+    // eslint-disable-next-line
+    [currentUser]
+  );
+
   // Manage userReqSubs Websockets
   useEffect(
     () => {

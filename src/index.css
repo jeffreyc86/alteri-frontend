@@ -37,7 +37,7 @@ code {
 
 .navbar{
   background-color: white;
-  height: 3vw;
+  height: 2.2rem;
   padding: 2px 3px;
 }
 
@@ -54,7 +54,7 @@ code {
 }
 
 .navbar-logo{
-  height: 2.8vw;
+  height: 2rem;
   margin-top: 1px;
   margin-bottom: 1px;
   margin-right: 5px;
@@ -72,11 +72,14 @@ code {
 }
 
 .dropbtn{
-  height: 2.6vw;
+  height: 2rem;
   padding: .2vw .36vw; 
   margin: .2vw auto;
   border: .25px solid #c0c0c0;
   border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  color: #303030
 }
 
 .dropbtn:hover {
@@ -84,11 +87,14 @@ code {
 }
 
 .mess-drop-btn{
-  height: 2.6vw;
+  height: 2rem;
   padding: .2vw .36vw; 
   margin: .2vw auto;
   border: .25px solid #c0c0c0;
   border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  color: #303030
 }
 
 .mess-drop-btn:hover {
@@ -101,7 +107,8 @@ code {
 }
 
 .menu-btn{
-  height: 2vw;
+  /* height: 2vw; */
+  font-size: 1.5rem;
   padding: 0px;
 }
 
@@ -114,19 +121,19 @@ code {
   position: absolute;
   bottom: 0px;
   right: 1px;
-  height: .2vw;
-  width: .6vw;
+  height: .1rem;
+  width: .55rem;
   border-radius: 50%;
   background: #0492c2;
   text-align: center;
   color: white;
-  font-size:.7vw;
+  font-size:.5rem;
   font-weight: bold;
   line-height: .3vw;
 }
 
 .navbar-left span{
-  font-size: 1.7vw;
+  font-size: 1.5rem;
   padding: .4vw;
   display: block;
   line-height: normal
@@ -157,117 +164,31 @@ code {
 
 @media screen and (max-width: 600px) {
   .navbar{
-    background-color: white;
-    height: 5vw;
-    padding-top: .2vw;
-    padding-bottom: .2vw;
-  }
-  
-  .navbar a{
-    color: black;
-  }
-  
-  .navbar a:visited{
-    color: black;
-  }
-  
-  .navbar-right{
-    float: right;
+    height: 1.8rem
   }
   
   .navbar-logo{
-    height: 2.8vw;
-    margin-top: 1px;
-    margin-bottom: 1px;
-    margin-right: 5px;
+    height: 1.6rem;
   }
   
-  .navbar-left {
-    float: left;
-    display: flex;
-    margin-top: 1vw;
-    margin-left: .5vw;
+  .dropbtn, .mess-drop-btn{
+    height: 1.6rem;
+    font-size: .5rem;
   }
-  
-  .dropdown {
-    margin-left: 5px;
-    overflow: hidden;
-  }
-  
-  .dropbtn{
-    height: 2.6vw;
-    padding-left: .5vw; 
-    padding-right: .5vw;
-    margin-top: .2vw;
-    margin-bottom: .2vw;
-    border: .25px solid #c0c0c0;
-    border-radius: 3px;
-    vertical-align: middle;
-  }
-  
-  .dropbtn:hover {
-    background-color: #b2b2b2;
-  }
+
   
   .mess-drop-btn{
-    height: 2.6vw;
-    padding-left: .5vw; 
-    padding-right: .5vw;
-    margin-top: .2vw;
-    margin-bottom: .2vw;
-    border: .25px solid #c0c0c0;
-    border-radius: 3px;
-    text-align: center;
-  }
+    height: 1.6rem;
+  } 
   
-  .mess-drop-btn:hover {
-    background-color: #b2b2b2;
-  }
-  
-  .menu-div{
-    display: inline-flex;
-  }
-  
-  .menu-btn{
-    height: 2vw;
-    padding: 0px;
-  }
-  
-  .mess-btn{
-    height: 2.2vw;
-    padding: 0px;
-  }
-  
+ .menu-btn {
+    font-size: 1.2rem;
+  } 
+
   .navbar-left span{
-    font-size: 1.7vw;
-    padding: .4vw;
-    display: block;
-    line-height: normal
+    font-size: 1.2rem;
   }
   
-  .dropdown-content {
-    background-color: #f3f3f3;
-    min-width: 12vw;
-    overflow: auto;
-    z-index: 1;
-    position: absolute;
-    box-shadow: 0px 8px 8px 0px rgba(0,0,0,0.2);
-    font-size: 2vw;
-  }
-  
-  .dropdown-content a {
-    float: none;
-    color: black;
-    padding: .5px .5px;
-    text-decoration: none;
-    display: flex;
-    justify-content: left;
-  }
-  
-  .dropdown-content a:hover{
-    font-weight: bold;
-    color: #0492c2
-  }
 }
 
 /* **************Footer************** */

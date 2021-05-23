@@ -2,7 +2,9 @@ import React from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { setConvoId } from '../features/conversationsSlice'
 import {useHistory} from "react-router-dom"
-import { isAfter, parseISO } from 'date-fns'
+import { isAfter, parseISO, isSameSecond } from 'date-fns'
+import { BiMessageDetail } from "react-icons/bi";
+
 
 
 function MessagesNav () {
@@ -45,29 +47,36 @@ function MessagesNav () {
         })
     }
 
-    // sees if the most recent conversations without messages
+    // check for new conversations with that haven't been seen
     if (userConvos.length > 0 && userMessages.length > 0) {
         userConvos.forEach(convo => {
             const membership = userMemberships.find(memb => memb.conversation_id === convo.id)
             const anyMesssage = userMessages.find(message => message.conversation_id === convo.id)
                 if (!anyMesssage && membership) {
-                    if (isAfter(parseISO(convo.created_at), parseISO(membership.last_read))){
-                        convoNotifications.push(convo)
+                    if (
+                      isSameSecond(
+                        parseISO(membership.last_read),
+                        parseISO(membership.created_at)
+                      )
+                    ) {
+                      convoNotifications.push(convo);
                     }
                 }
         })
     }
 
     return (
-        <div className="dropdown">
-            <div className="menu-div">
-                <button className="mess-drop-btn" onClick={handleClick}>
-                    <img className="mess-btn" src={process.env.PUBLIC_URL + "/images/messages.png"} alt="messages"/>
-                </button>
-                {convoNotifications.length > 0 && <span className="badge">{convoNotifications.length}</span>}
-            </div>
+      <div className="dropdown">
+        <div className="menu-div">
+          <button className="mess-drop-btn" onClick={handleClick}>
+            <BiMessageDetail className="menu-btn" />
+          </button>
+          {convoNotifications.length > 0 && (
+            <span className="badge">{convoNotifications.length}</span>
+          )}
         </div>
-    )
+      </div>
+    );
 }
 
 export default MessagesNav

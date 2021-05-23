@@ -2,10 +2,8 @@ import React, { useState, useEffect } from "react";
 import PendingRequestCard from "./PendingRequestCard";
 import { getDistance, convertDistance } from "geolib";
 import { useSelector } from "react-redux";
-import useSubscription from "../../features/useSubscriptions";
 
 function PendingRequestContainer() {
-  const ws = useSubscription();
 
   const [distFilter, setDistFilter] = useState(100000000);
 
@@ -19,21 +17,6 @@ function PendingRequestContainer() {
     (req) => req.recipient_id !== currentUser.id
   );
 
-  // currentUser is authed, create pending request subscription
-  useEffect(
-    () => {
-      if (currentUser) {
-        ws.createPendingSub();
-      }
-
-      // Componet Unmounts
-      return () => {
-        ws.disconnectPendingSub();
-      };
-    },
-    // eslint-disable-next-line
-    [currentUser]
-  );
 
   const checkIfWithinDistance = (request) => {
     let distance = "Unavailable";

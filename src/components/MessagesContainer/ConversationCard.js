@@ -2,11 +2,12 @@ import React, {useState, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { updateMemberships} from '../../features/userSlice'
 import {setConvoId} from '../../features/conversationsSlice'
-import { isAfter, parseISO } from 'date-fns'
+import { isAfter, parseISO, isSameSecond } from 'date-fns'
 
 function ConversationCard({conversation}){
 
     const [newMessage,setNewMessage] = useState(false)
+   
 
     const currentUser = useSelector(state=>state.user.currentUser)
     const userMemberships = useSelector(state=>state.user.memberships)
@@ -24,13 +25,18 @@ function ConversationCard({conversation}){
 
     const convoMembership = userMemberships.find(memberS => memberS.conversation_id === conversation.id)
     
+    
     useEffect(()=>{
-        if (convoMessages.length > 0 && convoMembership) {
+        if (convoMessages && convoMembership) {
             const lastMessage = [...convoMessages].splice(-1)[0]
-            if (lastMessage.user_id !== currentUser.id && isAfter(parseISO(lastMessage.created_at), parseISO(convoMembership.last_read))) {
-               setNewMessage(true)
+            const sameSec = isSameSecond(
+              parseISO(convoMembership.last_read),
+              parseISO(convoMembership.created_at)
+            );
+            if (lastMessage && currentUser && lastMessage.user_id !== currentUser.id && isAfter(parseISO(lastMessage.created_at),parseISO(convoMembership.last_read)) || isSameSecond(parseISO(convoMembership.last_read), parseISO(convoMembership.created_at))) {
+                setNewMessage(true);
             } else {
-                setNewMessage(false)
+              setNewMessage(false);
             }
         }
     }, [convoMembership, convoMessages, currentUser.id])
