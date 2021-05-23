@@ -20,6 +20,7 @@ function MenuNav ({showMenu, setShowMenu }) {
         // convoSubs.forEach((sub) => sub.unsubscribe());
         console.log("logout");
         ws.disconnectUserReqSubs();
+        ws.disconnectUserConvoSubs();
     }
 
     function handleLogOut() {

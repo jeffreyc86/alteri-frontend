@@ -1,6 +1,6 @@
-import React, { useDebugValue } from "react";
+import { useDebugValue } from "react";
 import { createConsumer } from "@rails/actioncable";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   updatePendingRequests,
   updateUserRequests,
@@ -8,6 +8,7 @@ import {
 } from "../features/requestsSlice";
 import { addMembership } from "../features/userSlice";
 import { addConvo } from "../features/conversationsSlice";
+import { addMessage } from "../features/messagesSlice";
 
 var WS_CONNECTION = {
   consumer: null,
@@ -30,6 +31,7 @@ const useSubscription = () => {
   };
 
   // SUBSCRIPTIONS
+  // create pending request sub
   const createPendingSub = () => {
     if (!WS_CONNECTION.pendingReqSub && WS_CONNECTION.consumer) {
       WS_CONNECTION.pendingReqSub = WS_CONNECTION.consumer.subscriptions.create(
@@ -37,13 +39,11 @@ const useSubscription = () => {
           channel: "PendingRequestsChannel",
         },
         {
-          connected: () => {console.log("pr connected")},
+          connected: () => {},
           received: (request) => {
             dispatch(addPendingRequest(request));
           },
-          disconnected: () => {
-            console.log("pr disconnected");
-          },
+          disconnected: () => {},
         }
       );
     }
@@ -56,11 +56,10 @@ const useSubscription = () => {
     }
   };
 
-  // create new user sub
+  // create new user request sub
   const createUserReqSubs = (usersPendingRequests = []) => {
     if (usersPendingRequests.length > 0) {
       usersPendingRequests.forEach((request) => {
-        // debugger
         if (!WS_CONNECTION.userReqSubs[request.id]) {
           WS_CONNECTION.userReqSubs[request.id] =
             WS_CONNECTION.consumer.subscriptions.create(
@@ -69,9 +68,7 @@ const useSubscription = () => {
                 id: request.id,
               },
               {
-                connected: () => {
-                  console.log(`request ${request.id} connected`);
-                },
+                connected: () => {},
                 received: (data) => {
                   if (data.request) {
                     dispatch(updateUserRequests(data.request));
@@ -85,10 +82,7 @@ const useSubscription = () => {
                     dispatch(addConvo(conversation));
                   }
                 },
-                disconnected: () => {
-                  debugger;
-                  console.log(`request ${request.id} DISconnected`);
-                },
+                disconnected: () => {},
               }
             );
         }
@@ -115,6 +109,49 @@ const useSubscription = () => {
     }
   };
 
+  // create new user convo sub
+  const createUserConvoSubs = (userConvos = []) => {
+    if (userConvos.length > 0) {
+      userConvos.forEach((convo) => {
+        if (!WS_CONNECTION.userConvoSubs[convo.id]) {
+          WS_CONNECTION.userConvoSubs[convo.id] =
+            WS_CONNECTION.consumer.subscriptions.create(
+              {
+                channel: "MessageChannel",
+                id: convo.id,
+              },
+              {
+                connected: () => {},
+                received: (message) => {
+                  dispatch(addMessage(message));
+                },
+                disconnected: () => {},
+              }
+            );
+        }
+      });
+    }
+  };
+
+  const disconnectUserConvoSubs = (id = "") => {
+    const discUserConvoSub = (convoId) => {
+      if (WS_CONNECTION.userConvoSubs[convoId]) {
+        WS_CONNECTION.userConvoSubs[convoId].disconnected();
+        delete WS_CONNECTION.userConvoSubs[convoId];
+      }
+    };
+
+    // Single Case
+    if (id) {
+      discUserConvoSub(id);
+    } else {
+      // Multi Case
+      Object.keys(WS_CONNECTION.userConvoSubs).forEach((convoId) =>
+        discUserConvoSub(convoId)
+      );
+    }
+  };
+
   useDebugValue(WS_CONNECTION);
 
   return {
@@ -126,6 +163,9 @@ const useSubscription = () => {
     // UserReqSubs
     createUserReqSubs,
     disconnectUserReqSubs,
+    // UserConvoSubs
+    createUserConvoSubs,
+    disconnectUserConvoSubs
   };
 };
 

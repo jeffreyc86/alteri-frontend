@@ -1,23 +1,18 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ReduxToastr from "react-redux-toastr";
 import {
   setCurrentUser,
   setCurrentLocation,
-  addMembership,
 } from "../features/userSlice";
 import {
   setPendingRequests,
   setUserRequests,
   setUserDonations,
-  updatePendingRequests,
-  updateUserRequests,
-  addPendingRequest,
 } from "../features/requestsSlice";
-import { addMessage, fetchAllMessages } from "../features/messagesSlice";
-import { fetchUserConvos, addConvo } from "../features/conversationsSlice";
-import { consumer, createConnection } from "./cable";
+import { fetchAllMessages } from "../features/messagesSlice";
+import { fetchUserConvos } from "../features/conversationsSlice";
 import useSubscriptions from "../features/useSubscriptions";
 
 import Navbar from "./Navbar";
@@ -96,132 +91,90 @@ function App() {
     }
   }, [currentUser, currentLocation]);
 
-  useEffect(() => {
-    dispatch(setPendingRequests());
-  }, []);
+  useEffect(
+    () => {
+      dispatch(setPendingRequests());
+    },
+    // eslint-disable-next-line
+    []
+  );
 
-  useEffect(() => {
-    if (currentUser) {
-      dispatch(fetchAllMessages(currentUser.id));
-      dispatch(fetchUserConvos(currentUser.id));
-    }
-  }, [currentUser]);
+  useEffect(
+    () => {
+      if (currentUser) {
+        dispatch(fetchAllMessages(currentUser.id));
+        dispatch(fetchUserConvos(currentUser.id));
+      }
+    },
+    // eslint-disable-next-line
+    [currentUser]
+  );
 
-  useEffect(() => {
-    if (currentUser) {
-      fetch(`${process.env.REACT_APP_RAILS_URL}usersrequests/${currentUser.id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          const { requests, donated_requests } = data;
-          const requestAction = setUserRequests(requests);
-          const donatedRequestAction = setUserDonations(donated_requests);
-          dispatch(requestAction);
-          dispatch(donatedRequestAction);
-        });
-    }
-  }, [currentUser]);
+  useEffect(
+    () => {
+      if (currentUser) {
+        fetch(
+          `${process.env.REACT_APP_RAILS_URL}usersrequests/${currentUser.id}`
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            const { requests, donated_requests } = data;
+            const requestAction = setUserRequests(requests);
+            const donatedRequestAction = setUserDonations(donated_requests);
+            dispatch(requestAction);
+            dispatch(donatedRequestAction);
+          });
+      }
+    },
+    // eslint-disable-next-line
+    [currentUser]
+  );
 
   // Create the Consumer connection
-  useEffect(() => {
-    if (currentUser) {
-      ws.createWebSocket();
-    }
-  }, [currentUser]);
+  useEffect(
+    () => {
+      if (currentUser) {
+        ws.createWebSocket();
+      }
+    },
+    // eslint-disable-next-line
+    [currentUser]
+  );
 
   // Manage userReqSubs Websockets
-  useEffect(() => {
-    if (currentUser && userRequests.length > 0) {
-      // dispatch to get user
-      const usersPendingRequests = userRequests.filter(
-        (req) => req.fulfilled === false
-      );
-      ws.createUserReqSubs(usersPendingRequests);
-    }
+  useEffect(
+    () => {
+      if (currentUser && userRequests.length > 0) {
+        // creates subscriptions for unfulfilled requests
+        const usersPendingRequests = userRequests.filter(
+          (req) => req.fulfilled === false
+        );
+        ws.createUserReqSubs(usersPendingRequests);
+      }
 
-    // UnMount
-    return () => ws.disconnectUserReqSubs();
-  }, [currentUser, userRequests]);
+      // UnMount
+      return () => ws.disconnectUserReqSubs();
+    },
+    // eslint-disable-next-line
+    [currentUser, userRequests]
+  );
 
-  // create subscriptions for user requests
-  // useEffect(() => {
-  //   if (userRequests.length > 0) {
-  //     const usersPendingRequests = [...userRequests].filter(
-  //       (req) => req.fulfilled === false
-  //     );
 
-  //     if (usersPendingRequests.length > 0) {
-  //       const connectionMap = userReqSubs;
-  //       usersPendingRequests.forEach((request) => {
-  //         // debugger
-  //         if (!userReqSubs[request.id]) {
-  //           const subscription = consumer.subscriptions.create(
-  //             {
-  //               channel: "RequestChannel",
-  //               id: request.id,
-  //             },
-  //             {
-  //               connected: () => {
-  //                 console.log(`request ${request.id} connected`);
-  //               },
-  //               received: (data) => {
-  //                 debugger;
-  //                 if (data.request) {
-  //                   dispatch(updateUserRequests(data.request));
-  //                 } else {
-  //                   const request = data[0];
-  //                   const membership = data[1];
-  //                   const conversation = data[2];
-  //                   dispatch(updatePendingRequests(request));
-  //                   dispatch(updateUserRequests(request));
-  //                   dispatch(addMembership(membership));
-  //                   dispatch(addConvo(conversation));
-  //                 }
-  //               },
-  //               disconnected: () => {
-  //                 console.log(`request ${request.id} DISconnected`);
-  //               },
-  //             }
-  //           );
+  // Manage userConvoSubs Websockets
+    useEffect(
+      () => {
+        if (currentUser && userConvos.length > 0) {
+          // creates subscriptions for user converations
+          ws.createUserConvoSubs(userConvos);
+        }
 
-  //           connectionMap[request.id] = subscription;
-  //         }
-  //       });
-  //       // dispatch(setUserReqSubs(connectionMap));
-  //     }
-  //   }
-  // }, [userRequests]);
+        // UnMount
+        return () => ws.disconnectUserConvoSubs();
+      },
+      // eslint-disable-next-line
+      [currentUser, userConvos]
+    );
 
-  // create subscriptions for user convos
-  // useEffect(() => {
-  //   if (userConvos && userConvos.length > 0) {
-  //     const connectionMap = userConvoSubs;
-  //     userConvos.forEach((convo) => {
-  //       // debugger
-  //       if (!userConvoSubs[convo.id]) {
-  //         const subscription = consumer.subscriptions.create(
-  //           {
-  //             channel: "MessageChannel",
-  //             id: convo.id,
-  //           },
-  //           {
-  //             connected: () => {
-  //               console.log(`convo ${convo.id} connected`);
-  //             },
-  //             received: (message) => {
-  //               dispatch(addMessage(message));
-  //             },
-  //             disconnected: () => {
-  //               console.log(`convo ${convo.id} DISconnected`);
-  //             },
-  //           }
-  //         );
-
-  //         connectionMap[convo.id] = subscription;
-  //       }
-  //     });
-  //     dispatch(setUserConvoSubs(connectionMap));
-  //   }
-  // }, [userConvos]);
 
   return (
     <div className="App">
