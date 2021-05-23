@@ -16,9 +16,6 @@ function MenuNav ({showMenu, setShowMenu }) {
 
     // unsubscribe to the connections
     function logoutSubscriptions() {
-        // userReqSubs.forEach((sub) => sub.unsubscribe());
-        // convoSubs.forEach((sub) => sub.unsubscribe());
-        console.log("logout");
         ws.disconnectUserReqSubs();
         ws.disconnectUserConvoSubs();
     }

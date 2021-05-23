@@ -21,6 +21,7 @@ function MessagesNav () {
 
     let convoNotifications = []
     let mostRecentMessages = []
+    // get most recent messages from each conversation
     if (userConvos && userConvos.length > 0 && userMessages.length > 0) {
         const userConvoIds = userConvos.map(convo => convo.id)
     
@@ -31,7 +32,8 @@ function MessagesNav () {
                 }
         })
     }
-
+    
+    // sees if the most recent messages from sender are after last read time
     if (mostRecentMessages.length > 0 && userMemberships.length > 0) {
         userMemberships.forEach(membership => {
             const recentConvoMessage = mostRecentMessages.find(message => message.conversation_id === membership.conversation_id)
@@ -43,11 +45,15 @@ function MessagesNav () {
         })
     }
 
+    // sees if the most recent conversations without messages
     if (userConvos.length > 0 && userMessages.length > 0) {
         userConvos.forEach(convo => {
+            const membership = userMemberships.find(memb => memb.conversation_id === convo.id)
             const anyMesssage = userMessages.find(message => message.conversation_id === convo.id)
-                if (!anyMesssage) {
-                    convoNotifications.push(convo)
+                if (!anyMesssage && membership) {
+                    if (isAfter(parseISO(convo.created_at), parseISO(membership.last_read))){
+                        convoNotifications.push(convo)
+                    }
                 }
         })
     }
