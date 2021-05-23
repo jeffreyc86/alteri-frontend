@@ -110,6 +110,7 @@ code {
   /* height: 2vw; */
   font-size: 1.5rem;
   padding: 0px;
+  pointer-events: none
 }
 
 .mess-btn{
