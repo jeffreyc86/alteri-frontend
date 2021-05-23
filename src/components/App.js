@@ -68,7 +68,7 @@ function App() {
         toastr.light(
           "Your location is required to use this app",
           "You may always change the permissions within your internet settings",
-          { icon: "info", status: "info" }
+          { icon: "info", status: "info", removeOnHoverTimeOut: 2000 }
         );
       }
     )
@@ -185,8 +185,7 @@ function App() {
     <div className="App">
       <Navbar />
       <ReduxToastr
-        timeOut={50000}
-        removeOnHoverTimeOut={50000}
+        timeOut={5000}
         preventDuplicates={true}
         progressBar
         closeOnToastrClick
