@@ -3,6 +3,7 @@ import React from 'react'
 import { GoogleLogin } from 'react-google-login';
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../features/userSlice"
+import { toastr } from "react-redux-toastr"
 
 function GoogleSignUp () {
 
@@ -11,7 +12,13 @@ function GoogleSignUp () {
     const dispatch = useDispatch()
 
     const failedResponse = (res) => {
-        alert("There was an issue signing up through Google. Please try again.")
+         const toastrOptions = {
+           icon: "warning",
+           status: "error",
+           removeOnHoverTimeOut: 2000,
+         };
+
+         toastr.light("There was an issue signing up through Google", `Please try again`, toastrOptions);
     }
 
     const responseGoogle = (res) => {
@@ -32,7 +39,19 @@ function GoogleSignUp () {
             .then(res=>res.json())
             .then(data => {
                if (data.errors) {
-                   data.errors.forEach(error=>{alert(error + ". Please sign in instead.")})
+                   data.errors.forEach(error=>{
+                          const toastrOptions = {
+                            icon: "warning",
+                            status: "error",
+                            removeOnHoverTimeOut: 2000,
+                          };
+
+                          toastr.light(
+                            error,
+                            `Please sign in instead`,
+                            toastrOptions
+                          )}
+                       )
                    history.push("/signin")
                } else {
                    const {user, token} = data

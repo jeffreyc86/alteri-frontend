@@ -3,6 +3,7 @@ import {useHistory} from 'react-router-dom'
 import { GoogleLogin } from 'react-google-login';
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../features/userSlice"
+import { toastr } from "react-redux-toastr";
 
 
 function GoogleSignIn (){
@@ -10,8 +11,19 @@ function GoogleSignIn (){
     const history = useHistory()
     const dispatch = useDispatch()
 
+    const toastrOptions = {
+      icon: "warning",
+      status: "warning",
+      removeOnHoverTimeOut: 2000,
+    };
+
     const failedResponse = () => {
-        alert("There was an issue signing in through Google. Please try again.")
+
+        toastr.light(
+          "There was an issue signing in through Google",
+          "Please try again",
+          toastrOptions
+        );
     }
 
     const responseGoogle = (res) => {
@@ -25,7 +37,7 @@ function GoogleSignIn (){
             .then(res=>res.json())
             .then(data => {
                 if (data.errors) {
-                    data.errors.forEach(error=>alert(error))
+                    data.errors.forEach(error=>toastr.light(error, toastrOptions))
                     history.push("/signup")
                 }
                 else {

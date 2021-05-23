@@ -23,8 +23,13 @@ function SignUpForm () {
         e.preventDefault()
 
         if (password !== confirmedPassword) {
-            toastr.warning("Passwords do not match", "Please enter and re-enter a password")
-            // alert("Passwords do not match. Please enter and re-enter a password")
+            const toastrOptions = {
+              icon: "warning",
+              status: "info",
+              removeOnHoverTimeOut: 2000,
+            };
+
+            toastr.light("Passwords do not match", "Please enter and re-enter a password", toastrOptions)
             setPassword("")
             setConfirmedPassword("")
         } else {

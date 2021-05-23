@@ -4,10 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ReduxToastr from "react-redux-toastr";
 import { toastr } from "react-redux-toastr";
 import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
-import {
-  setCurrentUser,
-  setCurrentLocation,
-} from "../features/userSlice";
+import { setCurrentUser, setCurrentLocation } from "../features/userSlice";
 import {
   setPendingRequests,
   setUserRequests,
@@ -63,7 +60,7 @@ function App() {
         };
         dispatch(setCurrentLocation(pos));
       },
-      // error 
+      // error
       () => {
         toastr.light(
           "Your location is required to use this app",
@@ -71,14 +68,16 @@ function App() {
           { icon: "info", status: "info", removeOnHoverTimeOut: 2000 }
         );
       }
-    )
+    );
   };
 
-  useEffect(() => {
-    getCurrentLocation();
-  }, 
-  // eslint-disable-next-line
-  []);
+  useEffect(
+    () => {
+      getCurrentLocation();
+    },
+    // eslint-disable-next-line
+    []
+  );
 
   useEffect(
     () => {
@@ -165,21 +164,20 @@ function App() {
     [currentUser, userRequests]
   );
 
-
   // Manage userConvoSubs Websockets
-    useEffect(
-      () => {
-        if (currentUser && userConvos.length > 0) {
-          // creates subscriptions for user converations
-          ws.createUserConvoSubs(userConvos);
-        }
+  useEffect(
+    () => {
+      if (currentUser && userConvos.length > 0) {
+        // creates subscriptions for user converations
+        ws.createUserConvoSubs(userConvos);
+      }
 
-        // UnMount
-        return () => ws.disconnectUserConvoSubs();
-      },
-      // eslint-disable-next-line
-      [currentUser, userConvos]
-    );
+      // UnMount
+      return () => ws.disconnectUserConvoSubs();
+    },
+    // eslint-disable-next-line
+    [currentUser, userConvos]
+  );
 
   return (
     <div className="App">

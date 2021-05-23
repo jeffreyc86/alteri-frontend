@@ -3,6 +3,7 @@ import {useSelector, useDispatch} from "react-redux"
 import {useHistory} from 'react-router-dom'
 import { createNewRequest } from "../../features/requestsSlice"
 import ItemCard from './ItemCard.js'
+import { toastr } from "react-redux-toastr";
 
 
 function RequestForm () {
@@ -50,7 +51,17 @@ function RequestForm () {
             const newArr = selectedItems.filter(item => item.id !== itemAdded.id)
             setSelectedItems(newArr)
         } else if (item.selected === false && selectedItems.length === 10) {
-            alert(`There is a 10 item limit to each request. Please remove an item before adding ${item.name}.`)
+            const toastrOptions = {
+              icon: "warning",
+              status: "error",
+              removeOnHoverTimeOut: 2000,
+            };
+
+            toastr.light(
+              "There is a 10 item limit to each request",
+              `Please remove an item before adding ${item.name}`,
+              toastrOptions
+            );
         } else {
             const newArray = items.map(item => {
                 if (item.id === itemAdded.id) {
@@ -100,7 +111,16 @@ function RequestForm () {
 
     function submitRequest() {
         if (selectedItems.length < 1) {
-            alert("Please select the items you need prior to submitting the request.")
+            const toastrOptions = {
+              icon: "warning",
+              status: "error",
+              removeOnHoverTimeOut: 2000,
+            };
+
+            toastr.light(
+              "Please select the items you need prior to submitting the request",
+              toastrOptions
+            );
         } else {
             const recipient_id = currentUser.id
             fetch(`${process.env.REACT_APP_RAILS_URL}requests`, {
