@@ -814,6 +814,11 @@ input::-webkit-file-upload-button:hover{
   background-color: red;
 }
 
+.no-items{
+  text-align: center;
+  margin: 1rem auto 1rem !important;
+}
+
 @media screen and (max-width: 600px) {
 
   .request-container{

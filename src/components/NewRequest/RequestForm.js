@@ -164,6 +164,7 @@ function RequestForm () {
             {filteredClothes}
             {filteredMisc.length > 0 ? <h1>Miscellaneous</h1> : null}
             {filteredMisc}
+            {filteredPandemic.length < 1 && filteredFoods < 1 && filteredHygiene < 1 && filteredClothes < 1 && filteredMisc < 1 ? <p className="no-items">Sorry there are no items that match that name. Please try a different name.</p> : null}
         </div>
     )
 }
