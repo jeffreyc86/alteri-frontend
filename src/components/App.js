@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ReduxToastr from "react-redux-toastr";
 import { toastr } from "react-redux-toastr";
-import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
+import ".././toastr.css";
 import { setCurrentUser, setCurrentLocation } from "../features/userSlice";
 import {
   setPendingRequests,
@@ -35,20 +35,24 @@ function App() {
   // LOCAL HOOKS
   const ws = useSubscriptions();
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      fetch(`${process.env.REACT_APP_RAILS_URL}show`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((user) => {
-          dispatch(setCurrentUser(user));
-        });
-    }
-  }, []);
+  useEffect(
+    () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        fetch(`${process.env.REACT_APP_RAILS_URL}show`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((res) => res.json())
+          .then((user) => {
+            dispatch(setCurrentUser(user));
+          });
+      }
+    },
+    // eslint-disable-next-line
+    []
+  );
 
   const getCurrentLocation = () => {
     navigator.geolocation.getCurrentPosition(

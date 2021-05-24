@@ -33,13 +33,13 @@ function ConversationCard({conversation}){
               parseISO(convoMembership.last_read),
               parseISO(convoMembership.created_at)
             );
-            if (lastMessage && currentUser && lastMessage.user_id !== currentUser.id && isAfter(parseISO(lastMessage.created_at),parseISO(convoMembership.last_read)) || isSameSecond(parseISO(convoMembership.last_read), parseISO(convoMembership.created_at))) {
+            if ((lastMessage && currentUser && lastMessage.user_id !== currentUser.id && isAfter(parseISO(lastMessage.created_at),parseISO(convoMembership.last_read))) || sameSec) {
                 setNewMessage(true);
             } else {
               setNewMessage(false);
             }
         }
-    }, [convoMembership, convoMessages, currentUser.id])
+    }, [convoMembership, convoMessages, currentUser])
 
     let reqMatch
 

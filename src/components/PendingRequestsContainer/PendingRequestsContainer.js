@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PendingRequestCard from "./PendingRequestCard";
 import { getDistance, convertDistance } from "geolib";
 import { useSelector } from "react-redux";
