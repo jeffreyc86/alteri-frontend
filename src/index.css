@@ -24,7 +24,7 @@ code {
 
 /* **************Home************** */
 .home{
-  margin-top: 20px;
+  margin-top: .5rem;
 }
 .home-page{
   border-top: solid .25px #dedede;
@@ -37,7 +37,7 @@ code {
 
 .navbar{
   background-color: white;
-  height: 2.2rem;
+  height: 2.25rem;
   padding: 2px 3px;
 }
 
@@ -197,22 +197,40 @@ code {
   width: 100vw;
   display: flex;
   justify-content: center;
-  padding-bottom: 1vw;
-  padding-top: .5vw;
+  padding-bottom: 1rem;
+  padding-top: .5rem;
 }
 
 .footer-logo{
-  width: 3vw;
-  height: 3vw;
+  width: 2rem;
+  height: 2rem;
 }
 
 .footer a{
   text-decoration: none;
   color: black;
-  width: 17vw;
-  font-size: 1.2vw;
-  margin-top: .8vw;
+  width: 9.5rem;
+  font-size: .7rem;
+  margin-top: .5rem;
   text-align: center;
+}
+
+@media screen and (max-width: 900px) {
+  .footer{
+    padding-bottom: 1vw;
+    padding-top: .5vw;
+  }
+
+  .footer-logo{
+    width: 3vw;
+    height: 3vw;
+  }
+
+  .footer a{
+    width: 17vw;
+    font-size: 1.2vw;
+    margin-top: .8vw;
+  }
 }
 
 .footer a:visited{
@@ -651,16 +669,17 @@ input::-webkit-file-upload-button:hover{
   margin-top: 10px;
   margin-bottom: 0px;
   color: #061430;
-  font-size: 2vw;
+  font-size: 2rem;
   text-align: center;
 }
 
+
 .request-form p {
   margin-top: 5px;
-  font-size: 1.4vw;
+  font-size: 1rem;
   color: #515151;
-
 }
+
 
 .request-details{
   width: 70vw;
@@ -690,9 +709,10 @@ input::-webkit-file-upload-button:hover{
 }
 
 .request-complete h3{
-  font-size: 2vw;
+  font-size: 1.5rem;
   margin: 0;
 }
+
 
 .request-complete span{
   color: #0492c2;
@@ -705,7 +725,7 @@ input::-webkit-file-upload-button:hover{
   padding: 1.6px 5px;
   color: #f9f9fa;
   font-weight: 525;
-  font-size: 1.3vw;
+  font-size: 1rem;
   background-color: #989898;
   box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.2);
 }
@@ -732,7 +752,7 @@ input::-webkit-file-upload-button:hover{
   padding: 1.6px 5px;
   color: #f9f9fa;
   font-weight: 525;
-  font-size: 1.4vw;
+  font-size: 1rem;
   background-color: #989898;
   box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.2);
 }
@@ -745,7 +765,7 @@ input::-webkit-file-upload-button:hover{
   margin-top: 10px;
   margin-bottom: 10px;
   color: #061430;
-  font-size: 2.5vw;
+  font-size: 1.5rem;
 }
 
 .item-card{
@@ -765,7 +785,7 @@ input::-webkit-file-upload-button:hover{
 .item-name{
   width: 31vw;
   font-weight: 500;
-  font-size: 1.5vw
+  font-size: 1rem
 }
 
 .pref-column{
@@ -774,7 +794,7 @@ input::-webkit-file-upload-button:hover{
 
 .pref-column input{
   width: 16vw;
-  font-size: 1.2vw;
+  font-size: 1rem;
 }
 
 .quantity-column{
@@ -784,7 +804,7 @@ input::-webkit-file-upload-button:hover{
 .quantity-column input{
   width: 2.5vw;
   margin-left: .8vw;
-  font-size: 1.2vw;
+  font-size: 1rem;
 }
 
 .btn-column{
@@ -800,7 +820,7 @@ input::-webkit-file-upload-button:hover{
   padding: 2px;
   color: #f9f9fa;
   font-weight: 525;
-  font-size: 1.5vw;
+  font-size: 1rem;
   background-color: #989898;
   box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.2);
 }
@@ -817,6 +837,54 @@ input::-webkit-file-upload-button:hover{
 .no-items{
   text-align: center;
   margin: 1rem auto 1rem !important;
+}
+
+@media screen and (max-width: 980px) {
+  .request-form h2{
+    font-size: 2vw;
+  }
+
+  .request-form p {
+    font-size: 1.4vw;
+  }
+
+  .request-form h1{
+    font-size: 2.5vw;
+  }
+
+  .request-complete h3{
+    font-size: 2vw
+  }
+
+  .request-complete button{
+    font-size: 1.3vw;
+  }
+
+  .search-filter button{
+    font-size: 1.4vw;
+  }
+
+  .request-form h1{
+    font-size: 2vw;
+  }
+
+  .item-name{
+    width: 31vw;
+    font-weight: 500;
+    font-size: 1.5vw
+  }
+
+  .pref-column input{
+    font-size: 1.2vw;
+  }
+
+  .quantity-column input{
+    font-size: 1.2vw;
+  }
+
+  .add-remove-btn{
+    font-size: 1.5vw;
+  }
 }
 
 @media screen and (max-width: 600px) {
