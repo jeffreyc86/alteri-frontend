@@ -1286,8 +1286,6 @@ input::-webkit-file-upload-button:hover{
   }
 
   .default-chat-container{
-    width: inherit;
-    height: inherit;
     text-align: center; 
   }
 
