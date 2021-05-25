@@ -245,14 +245,14 @@ code {
   border-radius: 3px;
   background-color: white;
   padding: 1vh 1vw;
-  margin: 15vh auto;
+  margin: 13.5vh auto;
   box-shadow: 8px 8px 8px 8px rgba(0,0,0,0.2);
   display: block;
   text-align: center;
   width: max-content;
 }
 .signin-container{
-  margin: 27.05vh auto;
+  margin: 26.05vh auto;
 }
 
 .sign-up-container:hover, .signin-container:hover {
@@ -797,7 +797,7 @@ input::-webkit-file-upload-button:hover{
 
 .pref-column input{
   width: 16vw;
-  font-size: 1rem;
+  font-size: .9rem;
 }
 
 .quantity-column{
