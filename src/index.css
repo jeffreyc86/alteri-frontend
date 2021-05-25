@@ -251,6 +251,9 @@ code {
   text-align: center;
   width: max-content;
 }
+.signin-container{
+  margin: 27.05vh auto;
+}
 
 .sign-up-container:hover, .signin-container:hover {
   border: solid .25px black;
