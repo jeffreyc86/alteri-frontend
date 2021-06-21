@@ -43,7 +43,7 @@ const useSubscription = () => {
           received: (request) => {
             dispatch(addPendingRequest(request));
           },
-          disconnected: () => {},
+          disconnected: () => {WS_CONNECTION.consumer.subscriptions.remove(WS_CONNECTION.pendingReqSub)},
         }
       );
     }
@@ -82,7 +82,7 @@ const useSubscription = () => {
                     dispatch(addConvo(conversation));
                   }
                 },
-                disconnected: () => {},
+                disconnected: () => {WS_CONNECTION.consumer.subscriptions.remove(WS_CONNECTION.userReqSubs[request.id])},
               }
             );
         }
@@ -125,7 +125,7 @@ const useSubscription = () => {
                 received: (message) => {
                   dispatch(addMessage(message));
                 },
-                disconnected: () => {},
+                disconnected: () => {WS_CONNECTION.consumer.subscriptions.remove(WS_CONNECTION.userConvoSubs[convo.id])},
               }
             );
         }
